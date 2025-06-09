@@ -135,6 +135,43 @@ h4 a {
   color: #181868;
 }
 
+/** map: **/
+
+.content_map {
+  margin: 0.5em;
+}
+
+.map_control {
+  padding: 0.1em 0.5em 0.1em 0.5em;
+  background: white;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 0 0.75em rgba(0,0,0,0.2);
+  border-radius: 0.25em;
+  text-align: right;
+}
+
+.map_title {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+  .map_title {
+    max-width: 15em;
+  }
+}
+
+.leaflet-control-mouseposition {
+  min-width: 11em;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0em 0em 0.25em #bbbbbb;
+  padding: 0.25em;
+  margin-left: 0.5em !important;
+  color: #333333;
+  font: 1em "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+
 /** footer: **/
 
 .footer {
