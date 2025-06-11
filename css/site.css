@@ -137,6 +137,16 @@ h4 a {
 
 /** map: **/
 
+.leaflet-control-mouseposition {
+  min-width: 11em;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0em 0em 0.25em #bbbbbb;
+  padding: 0.25em;
+  margin-left: 0.5em !important;
+  color: #333333;
+  font: 1em "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
 .content_map {
   margin: 0.5em;
 }
@@ -161,16 +171,33 @@ h4 a {
   }
 }
 
-.leaflet-control-mouseposition {
-  min-width: 11em;
-  background-color: rgba(255, 255, 255, 0.7);
-  box-shadow: 0em 0em 0.25em #bbbbbb;
-  padding: 0.25em;
-  margin-left: 0.5em !important;
-  color: #333333;
-  font: 1em "Helvetica Neue", Arial, Helvetica, sans-serif;
+.map_color_map {
+  padding-top: 0.7em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
+.map_color_map p {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.map_color_map_color {
+  display: inline-block;
+  vertical-align: text-bottom;
+  width: 1.3em;
+  height: 1.3em;
+  margin: 0;
+  margin-right: 0.3em;
+}
+
+.map_color_map_value {
+  display: inline-block;
+  vertical-align: text-bottom;
+  text-align: left;
+}
 
 /** footer: **/
 
