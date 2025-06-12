@@ -237,12 +237,17 @@ function load_map() {
     if (poly_value == 'null') {
       continue;
     };
+    var poly_npix = africa_adm1[i]['npix'];
+    if ((poly_npix == 'null') || (parseInt(poly_npix) < 0)) {
+      continue;
+    };
     var poly_name = africa_adm1[i]['name'];
     var poly_fc = africa_adm1[i]['forest_cover_2020'];
     var poly_color = value_to_color(poly_value);
     var poly = L.polygon(africa_adm1[i]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
     poly.bindTooltip(
       '<b>name:</b> ' + poly_name + '<br>' +
+      '<b>npix:</b> ' + poly_npix + '<br>' +
       '<b>dTnc:</b> ' + poly_value.toFixed(3) + '<br>' +
       '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3)
     );
@@ -256,12 +261,17 @@ function load_map() {
     if (poly_value == 'null') {
       continue;
     };
+    var poly_npix = americas_adm1[i]['npix'];
+    if ((poly_npix == 'null') || (parseInt(poly_npix) < 0)) {
+      continue;
+    };
     var poly_name = americas_adm1[i]['name'];
     var poly_fc = americas_adm1[i]['forest_cover_2020'];
     var poly_color = value_to_color(poly_value);
     var poly = L.polygon(americas_adm1[i]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
     poly.bindTooltip(
       '<b>name:</b> ' + poly_name + '<br>' +
+      '<b>npix:</b> ' + poly_npix + '<br>' +
       '<b>dTnc:</b> ' + poly_value.toFixed(3) + '<br>' +
       '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3)
     );
@@ -275,12 +285,17 @@ function load_map() {
     if (poly_value == 'null') {
       continue;
     };
+    var poly_npix = se_asia_adm1[i]['npix'];
+    if ((poly_npix == 'null') || (parseInt(poly_npix) < 0)) {
+      continue;
+    };
     var poly_name = se_asia_adm1[i]['name'];
     var poly_fc = se_asia_adm1[i]['forest_cover_2020'];
     var poly_color = value_to_color(poly_value);
     var poly = L.polygon(se_asia_adm1[i]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
     poly.bindTooltip(
       '<b>name:</b> ' + poly_name + '<br>' +
+      '<b>npix:</b> ' + poly_npix + '<br>' +
       '<b>dTnc:</b> ' + poly_value.toFixed(3) + '<br>' +
       '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3)
     );
