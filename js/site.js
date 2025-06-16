@@ -20,30 +20,11 @@ var site_vars = {
       '#f2cbb7', '#f7ad90', '#ee8468', '#d65244', '#b40426'
     ]
   },
-  /* data areas and files: */
-  'data': {
-    'africa': {
-      'name': 'Africa',
-      'adm1_file': 'data/africa_adm1.json',
-      'adm1_data': null,
-      'adm2_file': 'data/africa_adm2.json',
-      'adm2_data': null
-    },
-    'americas': {
-      'name': 'Americas',
-      'adm1_file': 'data/americas_adm1.json',
-      'adm1_data': null,
-      'adm2_file': 'data/americas_adm2.json',
-      'adm2_data': null
-    },
-    'se_asia': {
-      'name': 'Southeast Asia',
-      'adm1_file': 'data/se_asia_adm1.json',
-      'adm1_data': null,
-      'adm2_file': 'data/se_asia_adm2.json',
-      'adm2_data': null
-    },
-  }
+  /* data details and storage: */
+  'data_url': 'data',
+  'data_areas': ['africa', 'americas', 'se_asia'],
+  'data_types': ['adm1', 'adm2'],
+  'data': {},
 };
 
 /* map mouse position overlay: */
@@ -104,34 +85,34 @@ L.control.mousePosition = function (options) {
 
 /* data loading function: */
 async function load_data() {
-  /* loop through data ares defined in site_vars: */
-  for (var area in site_vars['data']) {
+  /* loop through data areas defined in site_vars: */
+  for (var i = 0 ; i < site_vars['data_areas'].length ; i++) {
+    /* this area: */
+    var data_area = site_vars['data_areas'][i];
     /* data for this area: */
-    var area_data = site_vars['data'][area];
-    /* load data from json using fetch. adm1 data ... : */
-    var adm1_file = area_data['adm1_file'];
-    await fetch(adm1_file, {'cache': 'no-cache'}).then(async function(data_req) {
-      /* if successful: */
-      if (data_req.status == 200) {
-        /* store json information from request: */
-        area_data['adm1_data'] = await data_req.json();
-      } else {
-        /* log error: */
-        console.log('* failed to load data from: ' + adm1_file);
-      };
-    });
-    /* ... adm2 file: */
-    var adm2_file = area_data['adm2_file'];
-    await fetch(adm2_file, {'cache': 'no-cache'}).then(async function(data_req) {
-      /* if successful: */
-      if (data_req.status == 200) {
-        /* store json information from request: */
-        area_data['adm2_data'] = await data_req.json();
-      } else {
-        /* log error: */
-        console.log('* failed to load data from: ' + adm2_file);
-      };
-    });
+    site_vars['data'][data_area] = {};
+    var area_data = site_vars['data'][data_area];
+    /* loop through data types: */
+    for (var j = 0 ; j < site_vars['data_types'].length ; j++) {
+      /* this type: */
+      var data_type = site_vars['data_types'][j];
+      /* data for this area: */
+      site_vars['data'][data_area][data_type] = {};
+      var type_data = site_vars['data'][data_area][data_type];
+      /* load data from json using fetch: */
+      var type_file = site_vars['data_url'] + '/' +
+                      data_area + '_' + data_type + '.json';
+      await fetch(type_file, {'cache': 'no-cache'}).then(async function(data_req) {
+        /* if successful: */
+        if (data_req.status == 200) {
+          /* store json information from request: */
+          site_vars['data'][data_area][data_type] = await data_req.json();
+        } else {
+          /* log error: */
+          console.log('* failed to load data from: ' + type_file);
+        };
+      });
+    };
   };
   /* once data is loaded, load the map: */
   load_map();
@@ -206,8 +187,8 @@ function load_map() {
   var layer_cartodb = L.tileLayer(
     'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
       attribution: '',
-      minZoom: 0,
-      maxZoom: 12
+      minZoom: 1,
+      maxZoom: 10
     }
   );
 
@@ -215,7 +196,7 @@ function load_map() {
   map = L.map('content_map', {
     zoom: 2,
     minZoom: 2,
-    maxZoom: 12,
+    maxZoom: 9,
     layers: [],
     center: [0, 0],
     maxBounds: [
@@ -230,76 +211,38 @@ function load_map() {
   /* add layers to map: */
   map.addLayer(layer_cartodb);
 
-  /* add africa adm1 polygons: */
-  var africa_adm1 = site_vars['data']['africa']['adm1_data'];
-  for (var i = 0 ; i < africa_adm1.length ; i ++) {
-    var poly_value = africa_adm1[i]['dTnc_perforestloss_smooth_aw'];
-    if (poly_value == 'null') {
-      continue;
-    };
-    var poly_npix = africa_adm1[i]['npix'];
-    if ((poly_npix == 'null') || (parseInt(poly_npix) < 0)) {
-      continue;
-    };
-    var poly_name = africa_adm1[i]['name'];
-    var poly_fc = africa_adm1[i]['forest_cover_2020'];
-    var poly_color = value_to_color(poly_value);
-    var poly = L.polygon(africa_adm1[i]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
-    poly.bindTooltip(
-      '<b>name:</b> ' + poly_name + '<br>' +
-      '<b>npix:</b> ' + poly_npix + '<br>' +
-      '<b>dTnc:</b> ' + poly_value.toFixed(3) + '<br>' +
-      '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3)
-    );
-    poly.addTo(map);
-  };
+  /* data type to plot: */
+  var data_type = 'adm1';
 
-  /* add americas adm1 polygons: */
-  var americas_adm1 = site_vars['data']['americas']['adm1_data'];
-  for (var i = 0 ; i < americas_adm1.length ; i ++) {
-    var poly_value = americas_adm1[i]['dTnc_perforestloss_smooth_aw'];
-    if (poly_value == 'null') {
-      continue;
+  /* loop through data areas defined in site_vars: */
+  for (var i = 0 ; i < site_vars['data_areas'].length ; i++) {
+    /* this area: */
+    var data_area = site_vars['data_areas'][i];
+    /* data for this type + area: */
+    var type_data = site_vars['data'][data_area][data_type];
+    /* add polygons for this data type: */
+    for (var j = 0 ; j < type_data.length ; j ++) {
+      var poly_value = type_data[j]['dTnc'];
+      if (poly_value == 'null') {
+        continue;
+      };
+      var poly_npix = type_data[j]['npix'];
+      if ((poly_npix == 'null') || (parseInt(poly_npix) < 250)) {
+        continue;
+      };
+      var poly_sd = type_data[j]['sd'];
+      var poly_name = type_data[j]['name'];
+      var poly_fc = type_data[j]['forest_cover_2020'];
+      var poly_color = value_to_color(poly_value);
+      var poly = L.polygon(type_data[j]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
+      poly.bindTooltip(
+        '<b>name:</b> ' + poly_name + '<br>' +
+        '<b>npix:</b> ' + poly_npix + '<br>' +
+        '<b>dTnc:</b> ' + poly_value.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
+        '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3)
+      );
+      poly.addTo(map);
     };
-    var poly_npix = americas_adm1[i]['npix'];
-    if ((poly_npix == 'null') || (parseInt(poly_npix) < 0)) {
-      continue;
-    };
-    var poly_name = americas_adm1[i]['name'];
-    var poly_fc = americas_adm1[i]['forest_cover_2020'];
-    var poly_color = value_to_color(poly_value);
-    var poly = L.polygon(americas_adm1[i]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
-    poly.bindTooltip(
-      '<b>name:</b> ' + poly_name + '<br>' +
-      '<b>npix:</b> ' + poly_npix + '<br>' +
-      '<b>dTnc:</b> ' + poly_value.toFixed(3) + '<br>' +
-      '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3)
-    );
-    poly.addTo(map);
-  };
-
-  /* add se_asia adm1 polygons: */
-  var se_asia_adm1 = site_vars['data']['se_asia']['adm1_data'];
-  for (var i = 0 ; i < se_asia_adm1.length ; i ++) {
-    var poly_value = se_asia_adm1[i]['dTnc_perforestloss_smooth_aw'];
-    if (poly_value == 'null') {
-      continue;
-    };
-    var poly_npix = se_asia_adm1[i]['npix'];
-    if ((poly_npix == 'null') || (parseInt(poly_npix) < 0)) {
-      continue;
-    };
-    var poly_name = se_asia_adm1[i]['name'];
-    var poly_fc = se_asia_adm1[i]['forest_cover_2020'];
-    var poly_color = value_to_color(poly_value);
-    var poly = L.polygon(se_asia_adm1[i]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
-    poly.bindTooltip(
-      '<b>name:</b> ' + poly_name + '<br>' +
-      '<b>npix:</b> ' + poly_npix + '<br>' +
-      '<b>dTnc:</b> ' + poly_value.toFixed(3) + '<br>' +
-      '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3)
-    );
-    poly.addTo(map);
   };
 
   /* add colour map: */
