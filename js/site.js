@@ -22,7 +22,9 @@ var site_vars = {
   'data_url': 'data',
   'data_areas': ['africa', 'americas', 'se_asia'],
   'data_types': ['adm1', 'adm2'],
-  'data': {}
+  'data': {},
+  /* minimum npix value for area to be included: */
+  'min_npix': 250
 };
 /* map objects: */
 var map = null;
@@ -47,7 +49,6 @@ L.Control.MousePosition = L.Control.extend({
     },
     prefix: ''
   },
-
   onAdd: function (map) {
     this._container = L.DomUtil.create('div', 'leaflet-control-mouseposition');
     L.DomEvent.disableClickPropagation(this._container);
@@ -55,11 +56,9 @@ L.Control.MousePosition = L.Control.extend({
     this._container.innerHTML=this.options.emptyString;
     return this._container;
   },
-
   onRemove: function (map) {
     map.off('mousemove', this._onMouseMove)
   },
-
   _onMouseMove: function (e) {
     var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
     var lat = this.options.latFormatter ? this.options.latFormatter(e.latlng.lat) : L.Util.formatNum(e.latlng.lat, this.options.numDigits);
@@ -67,7 +66,6 @@ L.Control.MousePosition = L.Control.extend({
     var prefixAndValue = this.options.prefix + ' ' + value;
     this._container.innerHTML = prefixAndValue;
   }
-
 });
 
 L.Map.mergeOptions({
@@ -245,11 +243,21 @@ function load_map() {
     };
     map_title.addTo(map);
     /* add base layer control: */
-    L.control.layers(
+    var control_layers = L.control.layers(
       tile_layers,
       null,
       {'collapsed': true, 'position': 'topleft'}
     ).addTo(map);
+    /* update layer control icon: */
+    var control_layers_childs = control_layers.getContainer().children;
+    /* loop through control child elements ... : */
+    for (var i = 0 ; i < control_layers_childs.length ; i++) {
+      /* find the toggle element, and adjust icon (background image): */
+      var this_child = control_layers_childs[i];
+      if (this_child.className == 'leaflet-control-layers-toggle') {
+        this_child.style.backgroundImage = 'url(../img/controls/tile_layers.png)';
+      };
+    };
     /* init layer groups for data types: */
     map_data_groups = {};
     var data_layers = {};
@@ -282,7 +290,7 @@ function load_map() {
           };
           /* ignore areas without sufficient pixel counts: */
           var poly_npix = type_data[k]['npix'];
-          if ((poly_npix == 'null') || (parseInt(poly_npix) < 250)) {
+          if ((poly_npix == 'null') || (parseInt(poly_npix) < site_vars['min_npix'])) {
             continue;
           };
           /* get required values for the area: */
@@ -308,11 +316,21 @@ function load_map() {
       };
     };
     /* add data type control: */
-    L.control.layers(
+    var control_types = L.control.layers(
       data_layers,
       null,
       {'collapsed': true, 'position': 'topright'}
     ).addTo(map);
+    /* update type control icon: */
+    var control_types_childs = control_types.getContainer().children;
+    /* loop through control child elements ... : */
+    for (var i = 0 ; i < control_types_childs.length ; i++) {
+      /* find the toggle element, and adjust icon (background image): */
+      var this_child = control_types_childs[i];
+      if (this_child.className == 'leaflet-control-layers-toggle') {
+        this_child.style.backgroundImage = 'url(../img/controls/type_layers.png)';
+      };
+    };
     /* add mouse pointer position: */
     L.control.mousePosition().addTo(map);
     /* add scale bar: */
