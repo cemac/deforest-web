@@ -255,7 +255,7 @@ function load_map() {
       /* find the toggle element, and adjust icon (background image): */
       var this_child = control_layers_childs[i];
       if (this_child.className == 'leaflet-control-layers-toggle') {
-        this_child.style.backgroundImage = 'url(../img/controls/tile_layers.png)';
+        this_child.style.backgroundImage = 'url(./img/controls/tile_layers.png)';
       };
     };
     /* init layer groups for data types: */
@@ -328,7 +328,7 @@ function load_map() {
       /* find the toggle element, and adjust icon (background image): */
       var this_child = control_types_childs[i];
       if (this_child.className == 'leaflet-control-layers-toggle') {
-        this_child.style.backgroundImage = 'url(../img/controls/type_layers.png)';
+        this_child.style.backgroundImage = 'url(./img/controls/type_layers.png)';
       };
     };
     /* add mouse pointer position: */
