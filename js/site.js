@@ -10,8 +10,8 @@ var site_vars = {
   'el_content_map': document.getElementById('content_map'),
   /* colour map: */
   'color_map': {
-    'min': -0.18,
-    'max': 0.18,
+    'min': -2.45,
+    'max': 2.45,
     'decimals': 2,
     'colors': [
       '#3b4cc0', '#5a78e4', '#7b9ff9', '#9ebeff', '#c0d4f5', '#dddcdc',
@@ -284,8 +284,8 @@ function load_map() {
         /* create polygons for this data type: */
         for (var k = 0 ; k < type_data.length ; k++) {
           /* ignore areas where dt value is not defined: */
-          var poly_value = type_data[k]['dTnc'];
-          if (poly_value == 'null') {
+          var poly_dtnc = type_data[k]['dTnc'];
+          if (poly_dtnc == 'null') {
             continue;
           };
           /* ignore areas without sufficient pixel counts: */
@@ -297,12 +297,15 @@ function load_map() {
           var poly_sd = type_data[k]['sd'];
           var poly_name = type_data[k]['name'];
           var poly_fc = type_data[k]['forest_cover_2020'];
-          var poly_color = value_to_color(poly_value);
+          /* calculate temperature difference value: */
+          var poly_dt = 1.0 * poly_dtnc * poly_fc;
+          var poly_color = value_to_color(poly_dt);
           var poly = L.polygon(type_data[k]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
           poly.bindTooltip(
             '<b>name:</b> ' + poly_name + '<br>' +
             '<b>npix:</b> ' + poly_npix + '<br>' +
-            '<b>dTnc:</b> ' + poly_value.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
+            '<b>dT:</b> ' + poly_dt.toFixed(3) + '<br>' +
+            '<b>dTnc:</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
             '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3),
             {'sticky': true, 'offset': [3, -3]}
           );
