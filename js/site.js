@@ -302,11 +302,11 @@ function load_map() {
           var poly_color = value_to_color(poly_dt);
           var poly = L.polygon(type_data[k]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
           poly.bindTooltip(
-            '<b>name:</b> ' + poly_name + '<br>' +
-            '<b>npix:</b> ' + poly_npix + '<br>' +
-            '<b>dT:</b> ' + poly_dt.toFixed(3) + '<br>' +
-            '<b>dTnc:</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
-            '<b>forest cover 2020:</b> ' + poly_fc.toFixed(3),
+            '<b>Region:</b> ' + poly_name + '<br>' +
+            '<b>No. data pixels:</b> ' + poly_npix + '<br>' +
+            '<b>ΔT (°C):</b> ' + poly_dt.toFixed(3) + '<br>' +
+            '<b>ΔT / forest loss (°C / %p):</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
+            '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3),
             {'sticky': true, 'offset': [3, -3]}
           );
           /* add polygon to layer group: */
