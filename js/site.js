@@ -23,6 +23,14 @@ var site_vars = {
   'data_areas': ['africa', 'americas', 'se_asia'],
   'data_types': ['adm1', 'adm2'],
   'data': {},
+  /* default data type: */
+  'type_default': 'adm1',
+  /* current data type: */
+  'type_current': null,
+  /* default deforestation percentage (1.0 = 100%): */
+  'deforest_default': 1.0,
+  /* current deforestation percentage: */
+  'deforest_current': null,
   /* minimum npix value for area to be included: */
   'min_npix': 250
 };
@@ -185,7 +193,15 @@ function draw_color_map() {
 };
 
 /* map loading function: */
-function load_map() {
+function load_map(deforest_percent) {
+  /* check deforest_percent value. if undefined, use default value: */
+  if ((deforest_percent == null) || (deforest_percent == undefined)) {
+    deforest_percent = site_vars['deforest_default'];
+  };
+  /* check deforest_percent value. if same as current, do nothing: */
+  if (deforest_percent == site_vars['deforest_current']) {
+    return;
+  };
   /* define cartodb layer: */
   var layer_cartodb = L.tileLayer(
     'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
@@ -268,10 +284,12 @@ function load_map() {
       /* create layer group: */
       map_data_groups[data_type] = L.layerGroup([]);
       map_data_groups[data_type].title = data_type;
+      map_data_groups[data_type].type = data_type;
       data_layers[data_type] = map_data_groups[data_type];
-      /* update map title when layer is added: */
+      /* update map title and store current type when layer is added: */
       map_data_groups[data_type].on('add', (e) => {
         map_title.update(e.target.title);
+        site_vars['type_current'] = e.target.type;
       });
       /* loop through data areas defined in site_vars: */
       for (var j = 0 ; j < site_vars['data_areas'].length ; j++) {
@@ -294,27 +312,29 @@ function load_map() {
             continue;
           };
           /* get required values for the area: */
-          var poly_sd = type_data[k]['sd'];
           var poly_name = type_data[k]['name'];
+          var poly_sd = type_data[k]['sd'];
           var poly_fc = type_data[k]['forest_cover_2020'];
           /* calculate temperature difference value: */
-          var poly_dt = 1.0 * poly_dtnc * poly_fc;
+          var poly_dt = deforest_percent * poly_dtnc * poly_fc;
           var poly_color = value_to_color(poly_dt);
           var poly = L.polygon(type_data[k]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
-          poly.bindTooltip(
-            '<b>Region:</b> ' + poly_name + '<br>' +
-            '<b>No. data pixels:</b> ' + poly_npix + '<br>' +
-            '<b>ΔT (°C):</b> ' + poly_dt.toFixed(3) + '<br>' +
-            '<b>ΔT / forest loss (°C / %p):</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
-            '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3),
-            {'sticky': true, 'offset': [3, -3]}
-          );
+          /* add required properties to poly: */
+          poly.dtnc = poly_dtnc;
+          poly.fc = poly_fc;
+          /* add tooltip: */
+          poly.tooltip = '<b>Region:</b> ' + poly_name + '<br>' +
+                         '<b>No. data pixels:</b> ' + poly_npix + '<br>' +
+                         '<b>ΔT (°C):</b> XDTX<br>' +
+                         '<b>ΔT / forest loss (°C / %p):</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
+                         '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3);
+          poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {'sticky': true, 'offset': [3, -3]});
           /* add polygon to layer group: */
           map_data_groups[data_type].addLayer(poly);
         };
       };
-      /* if this is the first layer group, add to map: */
-      if (i == 0) {
+      /* if this is the default data type, add to map: */
+      if (data_type == site_vars['type_default']) {
         map_data_groups[data_type].addTo(map);
       };
     };
@@ -338,6 +358,22 @@ function load_map() {
     L.control.mousePosition().addTo(map);
     /* add scale bar: */
     L.control.scale().addTo(map);
+  /* else, map is defined, so need to redraw polygons: */
+  } else {
+    /* loop through data type groups: */
+    for (var data_group_name in map_data_groups) {
+      /* this data group: */
+      var map_data_group = map_data_groups[data_group_name];
+      /* loop through polygons in data group: */
+      map_data_group.eachLayer(function(l) {
+        /* calculate updated dt value and colour: */
+        var poly_dt = deforest_percent * l.dtnc * l.fc;
+        var poly_color = value_to_color(poly_dt);
+        /* update polygon style and tooltip: */
+        l.setStyle({'color': poly_color, 'fillColor': poly_color})
+        l.bindTooltip(l.tooltip.replace('XDTX', poly_dt.toFixed(3)), {'sticky': true, 'offset': [3, -3]});
+      });
+    };
   };
   /* add colour map if not yet added: */
   if (map_color_map == null) {
@@ -353,6 +389,8 @@ function load_map() {
     };
     map_color_map.addTo(map);
   };
+  /* store current deforestation percentage value: */
+  site_vars['deforest_current'] = deforest_percent;
 };
 
 
