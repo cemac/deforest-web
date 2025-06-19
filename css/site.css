@@ -212,18 +212,18 @@ h4 a {
   margin-left: 0.5em;
 }
 
+.content_slider_value {
+  margin: 0.2em;
+  font-weight: 0.9em;
+  color: #484848;
+}
+
 .content_slider_slider {
   width: 75%;
-  max-width: 50em;
+  max-width: 25em;
   margin-top: 0.5em;
   margin-bottom: 1em;
   margin-left: 1.5em;
-}
-
-.content_slider_value {
-  margin: 0.2em;
-  margin-left: 0.5em;
-  color: #383838;
 }
 
 /** footer: **/
