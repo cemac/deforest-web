@@ -33,7 +33,10 @@ var site_vars = {
   /* current deforestation percentage: */
   'deforest_current': null,
   /* minimum npix value for area to be included: */
-  'min_npix': 250
+  'min_npix': 250,
+  /* elements for slider: */
+  'slider_el': document.getElementById('content_slider_slider'),
+  'slider_value_el': document.getElementById('content_slider_value')
 };
 /* map objects: */
 var map = null;
@@ -194,6 +197,51 @@ function draw_color_map() {
   };
   /* return the html: */
   return color_map_html;
+};
+
+/* function to load slider: */
+function load_slider() {
+  /* elements for slider: */
+  var slider_el = site_vars['slider_el'];
+  var slider_value_el = site_vars['slider_value_el'];
+  /* current deforest value: */
+  var slider_value = parseFloat(site_vars['deforest_current']);
+  /* if no current value, use default value: */
+  if ((isNaN(slider_value)) || (slider_value == null) ||
+      (slider_value == undefined)) {
+    slider_value = parseFloat(site_vars['deforest_default'])
+  }
+  /* set the value: */
+  slider_value_el.innerHTML = (slider_value * 100).toFixed(0) + ' %';
+  /* if the slider does not exist ... : */
+  if (slider_el.noUiSlider == undefined){
+    /* create slider: */
+    noUiSlider.create(slider_el, {
+      'start': [slider_value],
+      'range': {
+        'min': [0.1],
+        'max': [1.0]
+      },
+      'step': 0.05,
+      'tooltips': false
+    });
+    /* add change listener: */
+    slider_el.noUiSlider.on('change', function() {
+      /* get slider value: */
+      var my_value = parseFloat(slider_el.noUiSlider.get());
+      /* update map: */
+      load_map(my_value);
+      /* set / display the value: */
+      slider_value_el.innerHTML = (my_value * 100).toFixed(0) + ' %';
+    });
+    /* add slide listener: */
+    slider_el.noUiSlider.on('slide', function() {
+      /* get slider value: */
+      var my_value = parseFloat(slider_el.noUiSlider.get());
+      /* set / display the value: */
+      slider_value_el.innerHTML = (my_value * 100).toFixed(0) + ' %';
+    });
+ };
 };
 
 /* map loading function: */
@@ -366,6 +414,8 @@ function load_map(deforest_percent) {
     L.control.mousePosition().addTo(map);
     /* add scale bar: */
     L.control.scale().addTo(map);
+    /* and load the slider: */
+    load_slider();
   /* else, map is defined, so need to redraw polygons: */
   } else {
     /* loop through data type groups: */

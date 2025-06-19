@@ -19,10 +19,17 @@
           media="all">
     <link rel="stylesheet"
           type="text/css"
+          href="./css/nouislider.min.css"
+          media="all">
+    <link rel="stylesheet"
+          type="text/css"
           href="./css/site.css"
           media="all">
     <!-- scripts: _________________________________________________________ -->
     <script src="./js/leaflet.js"
+            charset="utf-8">
+    </script>
+    <script src="./js/nouislider.min.js"
             charset="utf-8">
     </script>
     <script src="./js/site.js"
@@ -81,16 +88,19 @@
         <!-- content: _____________________________________________________ -->
         <div id="content_content"
              class="content_content column">
-
-          <!-- controls: __________________________________________________ -->
-          <div id="content_controls"
-               class="content_controls">
-          </div>
           <!-- map: _______________________________________________________ -->
           <div id="content_map"
-               class="content_map row flext_start">
+               class="content_map row flex_start">
           </div>
-
+          <!-- slider: ____________________________________________________ -->
+          <div id="content_slider"
+               class="content_slider column flex_no_grow flex_start">
+            <h4 class="content_slider_title">Deforestation percentage</h4>
+            <div id="content_slider_slider"
+                 class="content_slider_slider"></div>
+            <div id="content_slider_value"
+                 class="content_slider_value"></div>
+          </div>
         <!-- content end: _________________________________________________ -->
         </div>
       </div>
