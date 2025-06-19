@@ -184,6 +184,12 @@ h4 a {
   text-align: left;
 }
 
+.map_color_map_title {
+  margin: 0.1em !important;
+  font-size: 1em;
+  font-weight: 600;
+}
+
 .map_color_map_color {
   display: inline-block;
   vertical-align: text-bottom;

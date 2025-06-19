@@ -10,6 +10,7 @@ var site_vars = {
   'el_content_map': document.getElementById('content_map'),
   /* colour map: */
   'color_map': {
+    'title': 'Warming due to<br>deforestation (°C)',
     'min': -2.45,
     'max': 2.45,
     'decimals': 2,
@@ -160,6 +161,7 @@ function draw_color_map() {
   /* get the colour map: */
   var color_map = site_vars['color_map'];
   /* get the colours and bounds for variable: */
+  var data_title = color_map['title'];
   var data_min = color_map['min'];
   var data_max = color_map['max'];
   var data_colors = color_map['colors'];
@@ -170,6 +172,8 @@ function draw_color_map() {
   var color_inc = (data_max - data_min) / color_count;
   /* create html: */
   var color_map_html = '';
+  /* add title: */
+  color_map_html += '<p class="map_color_map_title">' + data_title + '</p>';
   for (var i = (color_count - 1); i > -1; i--) {
     var my_html = '<p>';
     my_html += '<span class="map_color_map_color" style="background: ' + data_colors[i] + ';"></span>';
@@ -265,7 +269,9 @@ function load_map(deforest_percent) {
       {'collapsed': true, 'position': 'topleft'}
     ).addTo(map);
     /* update layer control icon: */
-    var control_layers_childs = control_layers.getContainer().children;
+    var control_layers_container = control_layers.getContainer();
+    control_layers_container.title = 'Select base map';
+    var control_layers_childs = control_layers_container.children;
     /* loop through control child elements ... : */
     for (var i = 0 ; i < control_layers_childs.length ; i++) {
       /* find the toggle element, and adjust icon (background image): */
@@ -345,7 +351,9 @@ function load_map(deforest_percent) {
       {'collapsed': true, 'position': 'topright'}
     ).addTo(map);
     /* update type control icon: */
-    var control_types_childs = control_types.getContainer().children;
+    var control_types_container = control_types.getContainer();
+    control_types_container.title = "Select data type";
+    var control_types_childs = control_types_container.children;
     /* loop through control child elements ... : */
     for (var i = 0 ; i < control_types_childs.length ; i++) {
       /* find the toggle element, and adjust icon (background image): */
