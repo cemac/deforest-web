@@ -482,7 +482,8 @@ function load_map(deforest_percent) {
         /* update polygon style and tooltip: */
         l.setStyle({'color': poly_color, 'fillColor': poly_color})
         l.bindTooltip(l.tooltip.replace('XDTX', poly_dt.toFixed(3)), {
-          'sticky': true, 'offset': [3, -3]
+          'sticky': false,
+          'offset': [3, -3]
         });
       });
     };
