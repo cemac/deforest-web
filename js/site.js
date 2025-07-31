@@ -398,9 +398,9 @@ function load_map(deforest_percent) {
           poly.fc = poly_fc;
           /* add tooltip: */
           poly.tooltip = '<b>Region:</b> ' + poly_name + '<br>' +
-                         '<b>No. data pixels:</b> ' + poly_npix + '<br>' +
-                         '<b>ΔT (°C):</b> XDTX<br>' +
-                         '<b>ΔT / forest loss (°C / %p):</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
+                         '<b>Number of data points:</b> ' + poly_npix + '<br>' +
+                         '<b>Change in temperature (°C):</b> XDTX<br>' +
+                         '<b>Change in temperature (°C) per percentage-point deforestation:</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
                          '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3);
           poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {'sticky': false, 'offset': [3, -3]});
           /* add polygon to layer group: */
