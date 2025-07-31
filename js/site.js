@@ -431,7 +431,7 @@ function load_map(deforest_percent) {
                          ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
                          '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3);
           poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {
-            'sticky': false,
+            'sticky': true,
             'offset': [3, -3]
           });
           /* add polygon to layer group: */
@@ -482,7 +482,7 @@ function load_map(deforest_percent) {
         /* update polygon style and tooltip: */
         l.setStyle({'color': poly_color, 'fillColor': poly_color})
         l.bindTooltip(l.tooltip.replace('XDTX', poly_dt.toFixed(3)), {
-          'sticky': false,
+          'sticky': true,
           'offset': [3, -3]
         });
       });
