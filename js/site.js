@@ -267,7 +267,16 @@ function load_map(deforest_percent) {
   /* define openstreetmap layer: */
   var layer_osm = L.tileLayer(
     'https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      'attribution': '&copy; <a href="https://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+      'attribution': '&copy; <a href="https://osm.org/copyright" target="_blank">OpenStreetMap contributors</a>',
+      minZoom: 2,
+      maxZoom: 10,
+      noWrap: true
+    }
+  );
+  /* define sentinel-2 layer: */
+  var layer_s2 = L.tileLayer(
+    'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg', {
+      'attribution': '<a href="https://s2maps.eu/" target="_blank">Sentinel-2 cloudless</a>',
       minZoom: 2,
       maxZoom: 10,
       noWrap: true
@@ -276,7 +285,8 @@ function load_map(deforest_percent) {
   /* all base tile layers: */
   var tile_layers = {
     'Carto': layer_cartodb,
-    'Open Street Map': layer_osm
+    'Open Street Map': layer_osm,
+    'Sentinel-2': layer_s2
   };
   /* define map if not defined: */
   if (map == null) {
@@ -292,8 +302,11 @@ function load_map(deforest_percent) {
       ],
       maxBoundsViscosity: 1.0,
       zoomControl: false,
-      attributionControl: false
+      attributionControl: true
     });
+    /* remove prefix from attribution control: */
+    var map_atrr_control = map.attributionControl;
+    map_atrr_control.setPrefix(false);
     /* add base tile layer to map: */
     map.addLayer(layer_cartodb);
     /* add zoom control: */
