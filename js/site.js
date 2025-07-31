@@ -23,6 +23,10 @@ var site_vars = {
   'data_url': 'data',
   'data_areas': ['africa', 'americas', 'se_asia'],
   'data_types': ['adm1', 'adm2'],
+  'data_type_labels': {
+    'adm1': 'Large administrative area',
+    'adm2': 'Small administrative area'
+  },
   'data': {},
   /* default data type: */
   'type_default': 'adm1',
@@ -348,15 +352,16 @@ function load_map(deforest_percent) {
     var data_layers = {};
     /* loop through data types: */
     for (var i = 0 ; i < site_vars['data_types'].length ; i++) {
-      /* this type: */
+      /* this type + label: */
       var data_type = site_vars['data_types'][i];
+      var data_type_label = site_vars['data_type_labels'][data_type];
       /* create layer group: */
-      map_data_groups[data_type] = L.layerGroup([]);
-      map_data_groups[data_type].title = data_type;
-      map_data_groups[data_type].type = data_type;
-      data_layers[data_type] = map_data_groups[data_type];
+      map_data_groups[data_type_label] = L.layerGroup([]);
+      map_data_groups[data_type_label].title = data_type_label;
+      map_data_groups[data_type_label].type = data_type;
+      data_layers[data_type_label] = map_data_groups[data_type_label];
       /* update map title and store current type when layer is added: */
-      map_data_groups[data_type].on('add', (e) => {
+      map_data_groups[data_type_label].on('add', (e) => {
         map_title.update(e.target.title);
         site_vars['type_current'] = e.target.type;
       });
@@ -399,12 +404,12 @@ function load_map(deforest_percent) {
                          '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3);
           poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {'sticky': false, 'offset': [3, -3]});
           /* add polygon to layer group: */
-          map_data_groups[data_type].addLayer(poly);
+          map_data_groups[data_type_label].addLayer(poly);
         };
       };
       /* if this is the default data type, add to map: */
       if (data_type == site_vars['type_default']) {
-        map_data_groups[data_type].addTo(map);
+        map_data_groups[data_type_label].addTo(map);
       };
     };
     /* add data type control: */
