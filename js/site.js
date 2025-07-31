@@ -513,11 +513,17 @@ function load_map(deforest_percent) {
     };
     map_color_map.addTo(map);
   };
-  /* disable mouseover events while zooming: */
+  /* disable mouseover events while zooming or moving: */
   map.on('zoomstart', function() {
     document.addEventListener('mouseover', mouseover_handler, true);
   });
+  map.on('movestart', function() {
+    document.addEventListener('mouseover', mouseover_handler, true);
+  });
   map.on('zoomend', function() {
+    document.removeEventListener('mouseover', mouseover_handler, true);
+  });
+  map.on('moveend', function() {
     document.removeEventListener('mouseover', mouseover_handler, true);
   });
   /* store current deforestation percentage value: */
