@@ -258,6 +258,12 @@ function load_slider() {
  };
 };
 
+/* mouseover event handler function: */
+function mouseover_handler(e) {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
 /* map loading function: */
 function load_map(deforest_percent) {
   /* check deforest_percent value. if undefined, use default value: */
@@ -430,10 +436,14 @@ function load_map(deforest_percent) {
                          ' deforestation:</b> ' + poly_dtnc.toFixed(3) +
                          ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
                          '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3);
-          poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {
+
+          var poly_tooltip = L.tooltip({
+            'content': poly.tooltip.replace('XDTX', poly_dt.toFixed(3)),
             'sticky': true,
-            'offset': [3, -3]
+            'offset': [3, -3],
+            'className': 'leaflet-tooltip-local'
           });
+          poly.bindTooltip(poly_tooltip);
           /* add polygon to layer group: */
           map_data_groups[data_type_label].addLayer(poly);
         };
@@ -483,7 +493,8 @@ function load_map(deforest_percent) {
         l.setStyle({'color': poly_color, 'fillColor': poly_color})
         l.bindTooltip(l.tooltip.replace('XDTX', poly_dt.toFixed(3)), {
           'sticky': true,
-          'offset': [3, -3]
+          'offset': [3, -3],
+          'className': 'leaflet-tooltip-local'
         });
       });
     };
@@ -502,6 +513,13 @@ function load_map(deforest_percent) {
     };
     map_color_map.addTo(map);
   };
+  /* disable mouseover events while zooming: */
+  map.on('zoomstart', function() {
+    document.addEventListener('mouseover', mouseover_handler, true);
+  });
+  map.on('zoomend', function() {
+    document.removeEventListener('mouseover', mouseover_handler, true);
+  });
   /* store current deforestation percentage value: */
   site_vars['deforest_current'] = deforest_percent;
 };

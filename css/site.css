@@ -291,3 +291,12 @@ button, button:focus, button:active {
 }
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}
+
+
+.leaflet-tooltip-local {
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: 0.1s;
+  transition-timing-function: linear;
+  transition-delay: 0.3s;
+}
