@@ -397,7 +397,7 @@ function load_map(deforest_percent) {
                          '<b>ΔT (°C):</b> XDTX<br>' +
                          '<b>ΔT / forest loss (°C / %p):</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
                          '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3);
-          poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {'sticky': true, 'offset': [3, -3]});
+          poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {'sticky': false, 'offset': [3, -3]});
           /* add polygon to layer group: */
           map_data_groups[data_type].addLayer(poly);
         };
