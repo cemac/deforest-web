@@ -76,9 +76,15 @@ L.Control.MousePosition = L.Control.extend({
     map.off('mousemove', this._onMouseMove)
   },
   _onMouseMove: function (e) {
-    var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
-    var lat = this.options.latFormatter ? this.options.latFormatter(e.latlng.lat) : L.Util.formatNum(e.latlng.lat, this.options.numDigits);
-    var value = this.options.lngFirst ? lng + this.options.separator + lat : lat + this.options.separator + lng;
+    var lng = this.options.lngFormatter ?
+      this.options.lngFormatter(e.latlng.lng) :
+      L.Util.formatNum(e.latlng.lng, this.options.numDigits);
+    var lat = this.options.latFormatter ?
+      this.options.latFormatter(e.latlng.lat) :
+      L.Util.formatNum(e.latlng.lat, this.options.numDigits);
+    var value = this.options.lngFirst ?
+      lng + this.options.separator + lat :
+      lat + this.options.separator + lng;
     var prefixAndValue = this.options.prefix + ' ' + value;
     this._container.innerHTML = prefixAndValue;
   }
@@ -121,16 +127,18 @@ async function load_data() {
       /* load data from json using fetch: */
       var type_file = site_vars['data_url'] + '/' +
                       data_area + '_' + data_type + '.json';
-      await fetch(type_file, {'cache': 'no-cache'}).then(async function(data_req) {
-        /* if successful: */
-        if (data_req.status == 200) {
-          /* store json information from request: */
-          site_vars['data'][data_area][data_type] = await data_req.json();
-        } else {
-          /* log error: */
-          console.log('* failed to load data from: ' + type_file);
-        };
-      });
+      await fetch(type_file, {'cache': 'no-cache'}).then(
+        async function(data_req) {
+          /* if successful: */
+          if (data_req.status == 200) {
+            /* store json information from request: */
+            site_vars['data'][data_area][data_type] = await data_req.json();
+          } else {
+            /* log error: */
+            console.log('* failed to load data from: ' + type_file);
+          };
+        }
+      );
     };
   };
   /* once data is loaded, load the map: */
@@ -183,7 +191,8 @@ function draw_color_map() {
   color_map_html += '<p class="map_color_map_title">' + data_title + '</p>';
   for (var i = (color_count - 1); i > -1; i--) {
     var my_html = '<p>';
-    my_html += '<span class="map_color_map_color" style="background: ' + data_colors[i] + ';"></span>';
+    my_html += '<span class="map_color_map_color" style="background: ' +
+               data_colors[i] + ';"></span>';
     my_html += '<span class="map_color_map_value">';
     if (i == (color_count - 1)) {
       my_html += '&gt;= ' + (data_min + (i * color_inc)).toFixed(data_decimals);
@@ -191,7 +200,8 @@ function draw_color_map() {
       if (i == 0) {
         my_html += '&lt; ';
       } else {
-        my_html += (data_min + (i * color_inc)).toFixed(data_decimals) + ' &lt; ';
+        my_html += (data_min + (i * color_inc)).toFixed(data_decimals) +
+                   ' &lt; ';
       };
       my_html += (data_min + ((i + 1) * color_inc)).toFixed(data_decimals);
     };
@@ -261,7 +271,11 @@ function load_map(deforest_percent) {
   /* define cartodb layer: */
   var layer_cartodb = L.tileLayer(
     'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-      'attribution': '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      'attribution': '&copy; ' +
+                     '<a href="https://www.openstreetmap.org/copyright" ' +
+                     'target="_blank">OpenStreetMap</a>, &copy; ' +
+                     '<a href="https://carto.com/attributions" ' +
+                     'target="_blank">CARTO</a>',
       'subdomains': 'abcd',
       minZoom: 2,
       maxZoom: 10,
@@ -271,16 +285,21 @@ function load_map(deforest_percent) {
   /* define openstreetmap layer: */
   var layer_osm = L.tileLayer(
     'https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      'attribution': '&copy; <a href="https://osm.org/copyright" target="_blank">OpenStreetMap contributors</a>',
+      'attribution': '&copy; ' +
+                     '<a href="https://osm.org/copyright" target="_blank">' +
+                     'OpenStreetMap contributors</a>',
       minZoom: 2,
       maxZoom: 10,
       noWrap: true
     }
   );
   /* define sentinel-2 layer: */
+  var host_s2 = 'https://tiles.maps.eox.at';
+  var tiles_s2 = 's2cloudless-2023_3857';
   var layer_s2 = L.tileLayer(
-    'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg', {
-      'attribution': '<a href="https://s2maps.eu/" target="_blank">Sentinel-2 cloudless</a>',
+    host_s2 + '/wmts/1.0.0/' + tiles_s2 + '/default/g/{z}/{y}/{x}.jpg', {
+      'attribution': '<a href="https://s2maps.eu/" target="_blank">' +
+                     'Sentinel-2 cloudless</a>',
       minZoom: 2,
       maxZoom: 10,
       noWrap: true
@@ -344,7 +363,8 @@ function load_map(deforest_percent) {
       /* find the toggle element, and adjust icon (background image): */
       var this_child = control_layers_childs[i];
       if (this_child.className == 'leaflet-control-layers-toggle') {
-        this_child.style.backgroundImage = 'url(./img/controls/tile_layers.png)';
+        this_child.style.backgroundImage =
+          'url(./img/controls/tile_layers.png)';
       };
     };
     /* init layer groups for data types: */
@@ -382,7 +402,8 @@ function load_map(deforest_percent) {
           };
           /* ignore areas without sufficient pixel counts: */
           var poly_npix = type_data[k]['npix'];
-          if ((poly_npix == 'null') || (parseInt(poly_npix) < site_vars['min_npix'])) {
+          if ((poly_npix == 'null') ||
+              (parseInt(poly_npix) < site_vars['min_npix'])) {
             continue;
           };
           /* get required values for the area: */
@@ -392,7 +413,12 @@ function load_map(deforest_percent) {
           /* calculate temperature difference value: */
           var poly_dt = deforest_percent * poly_dtnc * poly_fc;
           var poly_color = value_to_color(poly_dt);
-          var poly = L.polygon(type_data[k]['geometry'], {'color': poly_color, 'weight': 1, 'fillColor': poly_color, 'fillOpacity': 0.6});
+          var poly = L.polygon(type_data[k]['geometry'], {
+            'color': poly_color,
+            'weight': 1,
+            'fillColor': poly_color,
+            'fillOpacity': 0.6
+          });
           /* add required properties to poly: */
           poly.dtnc = poly_dtnc;
           poly.fc = poly_fc;
@@ -400,9 +426,14 @@ function load_map(deforest_percent) {
           poly.tooltip = '<b>Region:</b> ' + poly_name + '<br>' +
                          '<b>Number of data points:</b> ' + poly_npix + '<br>' +
                          '<b>Change in temperature (°C):</b> XDTX<br>' +
-                         '<b>Change in temperature (°C) per percentage-point deforestation:</b> ' + poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
+                         '<b>Change in temperature (°C) per percentage-point' +
+                         ' deforestation:</b> ' + poly_dtnc.toFixed(3) +
+                         ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
                          '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3);
-          poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {'sticky': false, 'offset': [3, -3]});
+          poly.bindTooltip(poly.tooltip.replace('XDTX', poly_dt.toFixed(3)), {
+            'sticky': false,
+            'offset': [3, -3]
+          });
           /* add polygon to layer group: */
           map_data_groups[data_type_label].addLayer(poly);
         };
@@ -427,7 +458,8 @@ function load_map(deforest_percent) {
       /* find the toggle element, and adjust icon (background image): */
       var this_child = control_types_childs[i];
       if (this_child.className == 'leaflet-control-layers-toggle') {
-        this_child.style.backgroundImage = 'url(./img/controls/type_layers.png)';
+        this_child.style.backgroundImage =
+          'url(./img/controls/type_layers.png)';
       };
     };
     /* add mouse pointer position: */
@@ -449,7 +481,9 @@ function load_map(deforest_percent) {
         var poly_color = value_to_color(poly_dt);
         /* update polygon style and tooltip: */
         l.setStyle({'color': poly_color, 'fillColor': poly_color})
-        l.bindTooltip(l.tooltip.replace('XDTX', poly_dt.toFixed(3)), {'sticky': true, 'offset': [3, -3]});
+        l.bindTooltip(l.tooltip.replace('XDTX', poly_dt.toFixed(3)), {
+          'sticky': true, 'offset': [3, -3]
+        });
       });
     };
   };
