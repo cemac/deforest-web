@@ -259,16 +259,18 @@ function load_map(deforest_percent) {
     'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
       'attribution': '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
       'subdomains': 'abcd',
-      minZoom: 1,
-      maxZoom: 10
+      minZoom: 2,
+      maxZoom: 10,
+      noWrap: true
     }
   );
   /* define openstreetmap layer: */
   var layer_osm = L.tileLayer(
     'https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       'attribution': '&copy; <a href="https://osm.org/copyright" target="_blank">OpenStreetMap</a> contributors',
-      minZoom: 1,
-      maxZoom: 10
+      minZoom: 2,
+      maxZoom: 10,
+      noWrap: true
     }
   );
   /* all base tile layers: */
@@ -279,14 +281,14 @@ function load_map(deforest_percent) {
   /* define map if not defined: */
   if (map == null) {
     map = L.map('content_map', {
-      zoom: 2,
-      minZoom: 2,
+      zoom: 3,
+      minZoom: 3,
       maxZoom: 9,
       layers: [],
       center: [0, 0],
       maxBounds: [
-        [-75, -300],
-        [75, 300]
+        [-75, -180],
+        [75, 180]
       ],
       maxBoundsViscosity: 1.0,
       zoomControl: false,
