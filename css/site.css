@@ -136,6 +136,7 @@ h4 a {
 }
 
 /** language selection: **/
+
 .content_language {
   font-size: 1.0em;
   height: 1.0em;
@@ -166,6 +167,7 @@ h4 a {
 
 .content_map {
   margin: 0.5em;
+  min-height: 75vh;
 }
 
 .map_control {

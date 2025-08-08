@@ -574,10 +574,19 @@ async function load_text(text_language) {
   if (site_vars['text'][text_language] != null) {
     /* text for this language: */
     var language_text = site_vars['text'][text_language];
-    /* update elemnts. title: */
+    /* update html elemnts. title: */
     document.title = language_text['title'];
     var el_title_a = document.getElementById('title_a');
     el_title_a.innerHTML = language_text['title'];
+    /* slider label: */
+    var el_content_slider_title = document.getElementById('content_slider_title');
+    el_content_slider_title.innerHTML = language_text['slider_title'];
+    /* text: */
+    var el_content_text = document.getElementById('content_text');
+    el_content_text.innerHTML = language_text['text'];
+
+
+
 
 
   };
@@ -589,6 +598,8 @@ async function load_text(text_language) {
   };
   var language_link_active = document.getElementById('language_link_' + text_language);
   language_link_active.style.textDecoration = 'underline';
+  /* then load the data: */
+  load_data();
 };
 
 
@@ -597,8 +608,6 @@ async function load_text(text_language) {
 
 /* on page load: */
 window.addEventListener('load', function() {
-  /* load data: */
-  load_data();
   /* load text: */
   load_text();
 });
