@@ -42,7 +42,9 @@ var site_vars = {
   'slider_el': document.getElementById('content_slider_slider'),
   'slider_value_el': document.getElementById('content_slider_value'),
   /* language settings: */
-  'language': null
+  'language': null,
+  'text_url': 'text',
+  'text': {}
 };
 /* map objects: */
 var map = null;
@@ -533,7 +535,7 @@ function load_map(deforest_percent) {
 };
 
 /* text loading function: */
-function load_text(text_language) {
+async function load_text(text_language) {
   /* set language first. if not defined ... : */
   if ((text_language == null) ||
       (text_language == undefined)) {
@@ -552,9 +554,33 @@ function load_text(text_language) {
   };
   /* set site language: */
   site_vars['language'] = text_language;
+  /* load text: */
+  var language_file = site_vars['text_url'] + '/' +
+                      text_language + '.json';
+  await fetch(language_file, {'cache': 'no-cache'}).then(
+    async function(text_req) {
+      /* if successful: */
+      if (text_req.status == 200) {
+        /* store json information from request: */
+        site_vars['text'][text_language] = await text_req.json();
+      } else {
+        /* log error: */
+        console.log('* failed to load text from: ' + language_file);
+        site_vars['text'][text_language] = null;
+      };
+    }
+  );
+  /* if text load was successful ... : */
+  if (site_vars['text'][text_language] != null) {
+    /* text for this language: */
+    var language_text = site_vars['text'][text_language];
+    /* update elemnts. title: */
+    document.title = language_text['title'];
+    var el_title_a = document.getElementById('title_a');
+    el_title_a.innerHTML = language_text['title'];
 
 
-
+  };
   /* underline active language link: */
   var language_links = document.getElementsByClassName('language_link');
   for (var i = 0 ; i < language_links.length ; i++) {
