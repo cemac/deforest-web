@@ -135,6 +135,23 @@ h4 a {
   color: #181868;
 }
 
+/** language selection: **/
+.content_language {
+  font-size: 1.0em;
+  height: 1.0em;
+  max-height: 1.0em;
+  margin: 0.2em 0.5em 0.2em 0.5em;
+}
+
+.language_link {
+  cursor: pointer;
+  margin: 0.2em;
+}
+
+.language_link:hover {
+  color: #484848;
+}
+
 /** map: **/
 
 .leaflet-control-mouseposition {

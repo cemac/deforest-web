@@ -40,7 +40,9 @@ var site_vars = {
   'min_npix': 250,
   /* elements for slider: */
   'slider_el': document.getElementById('content_slider_slider'),
-  'slider_value_el': document.getElementById('content_slider_value')
+  'slider_value_el': document.getElementById('content_slider_value'),
+  /* language settings: */
+  'language': null
 };
 /* map objects: */
 var map = null;
@@ -530,6 +532,39 @@ function load_map(deforest_percent) {
   site_vars['deforest_current'] = deforest_percent;
 };
 
+/* text loading function: */
+function load_text(text_language) {
+  /* set language first. if not defined ... : */
+  if ((text_language == null) ||
+      (text_language == undefined)) {
+    /* try to detect from browser: */
+    var browser_language = navigator.language;
+    /* check for portugese: */
+    if (browser_language.search(/^pt/) == 0) {
+      text_language = 'pt';
+    /* else, use english: */
+    } else {
+      text_language = 'en';
+    };
+  /* use english, unless portugese specified ... :*/
+  } else if (text_language != 'pt') {
+      text_language = 'en';
+  };
+  /* set site language: */
+  site_vars['language'] = text_language;
+
+
+
+  /* underline active language link: */
+  var language_links = document.getElementsByClassName('language_link');
+  for (var i = 0 ; i < language_links.length ; i++) {
+    var language_link = language_links[i];
+    language_link.style.textDecoration = 'none';
+  };
+  var language_link_active = document.getElementById('language_link_' + text_language);
+  language_link_active.style.textDecoration = 'underline';
+};
+
 
 /** add listeners: **/
 
@@ -538,4 +573,6 @@ function load_map(deforest_percent) {
 window.addEventListener('load', function() {
   /* load data: */
   load_data();
+  /* load text: */
+  load_text();
 });
