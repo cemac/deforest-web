@@ -10,7 +10,6 @@ var site_vars = {
   'el_content_map': document.getElementById('content_map'),
   /* colour map: */
   'color_map': {
-    'title': 'Warming due to<br>deforestation (°C)',
     'min': -2.45,
     'max': 2.45,
     'decimals': 2,
@@ -23,10 +22,6 @@ var site_vars = {
   'data_url': 'data',
   'data_areas': ['africa', 'americas', 'se_asia'],
   'data_types': ['adm1', 'adm2'],
-  'data_type_labels': {
-    'adm1': 'Large administrative area',
-    'adm2': 'Small administrative area'
-  },
   'data': {},
   /* default data type: */
   'type_default': 'adm1',
@@ -43,6 +38,7 @@ var site_vars = {
   'slider_value_el': document.getElementById('content_slider_value'),
   /* language settings: */
   'language': null,
+  'map_language': null,
   'text_url': 'text',
   'text': {}
 };
@@ -179,8 +175,11 @@ function value_to_color(value) {
 function draw_color_map() {
   /* get the colour map: */
   var color_map = site_vars['color_map'];
+  /* get selected language and text: */
+  var text_language = site_vars['language'];
+  var language_text = site_vars['text'][text_language];
   /* get the colours and bounds for variable: */
-  var data_title = color_map['title'];
+  var data_title = language_text['color_map_title'];
   var data_min = color_map['min'];
   var data_max = color_map['max'];
   var data_colors = color_map['colors'];
@@ -270,13 +269,26 @@ function mouseover_handler(e) {
 
 /* map loading function: */
 function load_map(deforest_percent) {
+  /* get selected language and text: */
+  var text_language = site_vars['language'];
+  var language_text = site_vars['text'][text_language];
+  /* current language of map text: */
+  var map_language = site_vars['map_language'];
   /* check deforest_percent value. if undefined, use default value: */
   if ((deforest_percent == null) || (deforest_percent == undefined)) {
     deforest_percent = site_vars['deforest_default'];
   };
-  /* check deforest_percent value. if same as current, do nothing: */
-  if (deforest_percent == site_vars['deforest_current']) {
+  /* check deforest_percent value. if same as current,
+     and language has not changed do nothing: */
+  if ((deforest_percent == site_vars['deforest_current']) &&
+      (map_language == text_language)) {
     return;
+  };
+  /* if language has changed, need to re-draw map: */
+  if ((map != null) && (map_language != text_language)) {
+    map.remove();
+    map = null;
+    map_color_map = null;
   };
   /* define cartodb layer: */
   var layer_cartodb = L.tileLayer(
@@ -384,7 +396,7 @@ function load_map(deforest_percent) {
     for (var i = 0 ; i < site_vars['data_types'].length ; i++) {
       /* this type + label: */
       var data_type = site_vars['data_types'][i];
-      var data_type_label = site_vars['data_type_labels'][data_type];
+      var data_type_label = language_text['data_type_labels'][data_type];
       /* create layer group: */
       map_data_groups[data_type_label] = L.layerGroup([]);
       map_data_groups[data_type_label].title = data_type_label;
@@ -434,13 +446,13 @@ function load_map(deforest_percent) {
           poly.fc = poly_fc;
           /* add tooltip: */
           poly.tooltip = '<b>Region:</b> ' + poly_name + '<br>' +
-                         '<b>Number of data points:</b> ' + poly_npix + '<br>' +
-                         '<b>Change in temperature (°C):</b> XDTX<br>' +
-                         '<b>Change in temperature (°C) per percentage-point' +
-                         ' deforestation:</b> ' + poly_dtnc.toFixed(3) +
-                         ' (+/- ' + poly_sd.toFixed(3) + ')<br>' +
-                         '<b>Forest cover 2020 (%):</b> ' + poly_fc.toFixed(3);
-
+                         '<b>' + language_text['poly_points'] + ':</b> ' +
+                         poly_npix + '<br>' +
+                         '<b>' + language_text['poly_dt'] + ':</b> XDTX<br>' +
+                         '<b>' + language_text['poly_dtnc'] + ':</b> ' +
+                         poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) +
+                         ')<br>' +
+                         '<b>' + language_text['poly_fc'] + ':</b> ' + poly_fc.toFixed(3);
           var poly_tooltip = L.tooltip({
             'content': poly.tooltip.replace('XDTX', poly_dt.toFixed(3)),
             'sticky': true,
@@ -532,6 +544,8 @@ function load_map(deforest_percent) {
   });
   /* store current deforestation percentage value: */
   site_vars['deforest_current'] = deforest_percent;
+  /* store current language of map text: */
+  site_vars['map_language'] = text_language;
 };
 
 /* text loading function: */
@@ -584,11 +598,6 @@ async function load_text(text_language) {
     /* text: */
     var el_content_text = document.getElementById('content_text');
     el_content_text.innerHTML = language_text['text'];
-
-
-
-
-
   };
   /* underline active language link: */
   var language_links = document.getElementsByClassName('language_link');
