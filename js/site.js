@@ -276,7 +276,11 @@ function load_map(deforest_percent) {
   var map_language = site_vars['map_language'];
   /* check deforest_percent value. if undefined, use default value: */
   if ((deforest_percent == null) || (deforest_percent == undefined)) {
-    deforest_percent = site_vars['deforest_default'];
+    deforest_percent = site_vars['deforest_current'];
+    if ((isNaN(deforest_percent)) || (deforest_percent == null) ||
+        (deforest_percent == undefined)) {
+      deforest_percent = site_vars['deforest_default'];
+    };
   };
   /* check deforest_percent value. if same as current,
      and language has not changed do nothing: */
@@ -392,6 +396,11 @@ function load_map(deforest_percent) {
     /* init layer groups for data types: */
     map_data_groups = {};
     var data_layers = {};
+    /* get current data type: */
+    var data_type_current = site_vars['type_current'];
+    if ((data_type_current == null) || (data_type_current == undefined)) {
+      data_type_current = site_vars['type_default'];
+    }
     /* loop through data types: */
     for (var i = 0 ; i < site_vars['data_types'].length ; i++) {
       /* this type + label: */
@@ -464,8 +473,8 @@ function load_map(deforest_percent) {
           map_data_groups[data_type_label].addLayer(poly);
         };
       };
-      /* if this is the default data type, add to map: */
-      if (data_type == site_vars['type_default']) {
+      /* if this is the current data type, add to map: */
+      if (data_type == data_type_current) {
         map_data_groups[data_type_label].addTo(map);
       };
     };
