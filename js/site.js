@@ -47,6 +47,7 @@ var map = null;
 var map_title = null;
 var map_color_map = null;
 var map_data_groups = null;
+var map_state = null;
 
 /* map mouse position overlay: */
 
@@ -547,10 +548,16 @@ function load_map(deforest_percent) {
   });
   map.on('zoomend', function() {
     document.removeEventListener('mouseover', mouseover_handler, true);
+    map_state = [map.getCenter(), map.getZoom()];
   });
   map.on('moveend', function() {
     document.removeEventListener('mouseover', mouseover_handler, true);
+    map_state = [map.getCenter(), map.getZoom()];
   });
+  /* set map view, if possible: */
+  if ((map_state != null) && (map_state != undefined)) {
+    map.setView(map_state[0], map_state[1]);
+  };
   /* store current deforestation percentage value: */
   site_vars['deforest_current'] = deforest_percent;
   /* store current language of map text: */
