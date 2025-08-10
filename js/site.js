@@ -44,6 +44,7 @@ var site_vars = {
 };
 /* map objects: */
 var map = null;
+var map_base = null;
 var map_title = null;
 var map_color_map = null;
 var map_data_groups = null;
@@ -309,6 +310,7 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
+  layer_cartodb.on('add', function() { map_base = 'cartodb'; });
   /* define openstreetmap layer: */
   var layer_osm = L.tileLayer(
     'https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -320,6 +322,7 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
+  layer_osm.on('add', function() { map_base = 'osm'; });
   /* define sentinel-2 layer: */
   var host_s2 = 'https://tiles.maps.eox.at';
   var tiles_s2 = 's2cloudless-2023_3857';
@@ -332,6 +335,15 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
+  layer_s2.on('add', function() { map_base = 's2'; });
+  /* get / set current base map: */
+  if (map_base == 's2') {
+    map_base = layer_s2;
+  } else if (map_base == 'osm') {
+    map_base = layer_osm;
+  } else {
+    map_base = layer_cartodb;
+  };
   /* all base tile layers: */
   var tile_layers = {
     'Carto': layer_cartodb,
@@ -358,7 +370,7 @@ function load_map(deforest_percent) {
     var map_atrr_control = map.attributionControl;
     map_atrr_control.setPrefix(false);
     /* add base tile layer to map: */
-    map.addLayer(layer_cartodb);
+    map.addLayer(map_base);
     /* add zoom control: */
     var zoom_control = L.control.zoom();
     zoom_control.addTo(map);
