@@ -107,8 +107,33 @@ L.control.mousePosition = function (options) {
 };
 
 
+
 /** functions **/
 
+
+/* functions to set and retrieve cookis. borrowed from 23 schools: */
+function set_cookie(cookie_name, cookie_value, expire_days) {
+  const d = new Date();
+  d.setTime(d.getTime() + (expire_days * 24 * 60 * 60 * 1000));
+  let expires = 'expires='+ d.toUTCString();
+  document.cookie = cookie_name + '=' + cookie_value + ';' + expires +
+                    ';path=/';
+};
+function get_cookie(cookie_name) {
+  let name = cookie_name + '=';
+  let decoded_cookie = decodeURIComponent(document.cookie);
+  let ca = decoded_cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+};
 
 /* data loading function: */
 async function load_data() {
@@ -581,14 +606,22 @@ async function load_text(text_language) {
   /* set language first. if not defined ... : */
   if ((text_language == null) ||
       (text_language == undefined)) {
-    /* try to detect from browser: */
-    var browser_language = navigator.language;
-    /* check for portugese: */
-    if (browser_language.search(/^pt/) == 0) {
-      text_language = 'pt';
-    /* else, use english: */
+    /* check for cookie value first: */
+    var stored_language = get_cookie('deforest_language');
+    /* if a value is retrieved ... : */
+    if (stored_language != '') {
+      /* use stored value: */
+      text_language = stored_language;
     } else {
-      text_language = 'en';
+      /* try to detect from browser: */
+      var browser_language = navigator.language;
+      /* check for portugese: */
+      if (browser_language.search(/^pt/) == 0) {
+        text_language = 'pt';
+      /* else, use english: */
+      } else {
+        text_language = 'en';
+      };
     };
   /* use english, unless portugese specified ... :*/
   } else if (text_language != 'pt') {
@@ -596,6 +629,7 @@ async function load_text(text_language) {
   };
   /* set site language: */
   site_vars['language'] = text_language;
+  set_cookie('deforest_language', text_language, 3);
   /* load text: */
   var language_file = site_vars['text_url'] + '/' +
                       text_language + '.json';
