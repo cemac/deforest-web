@@ -302,6 +302,7 @@ function load_map(deforest_percent) {
   var map_title = site_vars['map_title'];
   var map_color_map = site_vars['map_color_map'];
   var map_data_groups = site_vars['map_data_groups'];
+  var map_state = site_vars['map_state'];
   /* get selected language and text: */
   var text_language = site_vars['language'];
   var language_text = site_vars['text'][text_language];
@@ -582,6 +583,11 @@ function load_map(deforest_percent) {
     };
     map_color_map.addTo(map);
   };
+  /* set map view, if possible: */
+  if ((map_state != null) &&
+      (map_state != undefined)) {
+    map.setView(map_state[0], map_state[1]);
+  };
   /* disable mouseover events while zooming or moving: */
   map.on('zoomstart', function() {
     document.addEventListener('mouseover', mouseover_handler, true);
@@ -603,14 +609,6 @@ function load_map(deforest_percent) {
       site_vars['map'].getZoom()
     ];
   });
-  /* set map view, if possible: */
-  if ((site_vars['map_state'] != null) &&
-      (site_vars['map_state'] != undefined)) {
-    map.setView(
-      site_vars['map_state'][0],
-      site_vars['map_state'][1]
-    );
-  };
   /* store map objects: */
   site_vars['map'] = map;
   site_vars['map_base'] = map_base;
