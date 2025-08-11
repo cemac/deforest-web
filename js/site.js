@@ -43,7 +43,7 @@ var site_vars = {
   'text': {},
   /* map objects: */
   'map': null,
-  'map_base': null,
+  'map_base_name': null,
   'map_title': null,
   'map_color_map': null,
   'map_data_groups': null,
@@ -298,7 +298,7 @@ function mouseover_handler(e) {
 function load_map(deforest_percent) {
   /* get map objects: */
   var map = site_vars['map'];
-  var map_base = site_vars['map_base'];
+  var map_base_name = site_vars['map_base_name'];
   var map_title = site_vars['map_title'];
   var map_color_map = site_vars['map_color_map'];
   var map_data_groups = site_vars['map_data_groups'];
@@ -342,7 +342,7 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
-  layer_cartodb.on('add', function() { site_vars['map_base'] = 'cartodb'; });
+  layer_cartodb.on('add', function() { site_vars['map_base_name'] = 'cartodb'; });
   /* define openstreetmap layer: */
   var layer_osm = L.tileLayer(
     'https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -354,7 +354,7 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
-  layer_osm.on('add', function() { site_vars['map_base'] = 'osm'; });
+  layer_osm.on('add', function() { site_vars['map_base_name'] = 'osm'; });
   /* define sentinel-2 layer: */
   var host_s2 = 'https://tiles.maps.eox.at';
   var tiles_s2 = 's2cloudless-2023_3857';
@@ -367,14 +367,14 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
-  layer_s2.on('add', function() { site_vars['map_base'] = 's2'; });
+  layer_s2.on('add', function() { site_vars['map_base_name'] = 's2'; });
   /* get / set current base map: */
-  if (map_base == 's2') {
-    map_base = layer_s2;
-  } else if (map_base == 'osm') {
-    map_base = layer_osm;
+  if (map_base_name == 's2') {
+    var map_base = layer_s2;
+  } else if (map_base_name == 'osm') {
+    var map_base = layer_osm;
   } else {
-    map_base = layer_cartodb;
+    var map_base = layer_cartodb;
   };
   /* all base tile layers: */
   var tile_layers = {
@@ -611,7 +611,7 @@ function load_map(deforest_percent) {
   });
   /* store map objects: */
   site_vars['map'] = map;
-  site_vars['map_base'] = map_base;
+  site_vars['map_base_name'] = map_base_name;
   site_vars['map_title'] = map_title;
   site_vars['map_color_map'] = map_color_map;
   site_vars['map_data_groups'] = map_data_groups;
