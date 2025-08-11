@@ -40,15 +40,15 @@ var site_vars = {
   'language': null,
   'map_language': null,
   'text_url': 'text',
-  'text': {}
+  'text': {},
+  /* map objects: */
+  'map': null,
+  'map_base': null,
+  'map_title': null,
+  'map_color_map': null,
+  'map_data_groups': null,
+  'map_state': null
 };
-/* map objects: */
-var map = null;
-var map_base = null;
-var map_title = null;
-var map_color_map = null;
-var map_data_groups = null;
-var map_state = null;
 
 /* map mouse position overlay: */
 
@@ -296,6 +296,12 @@ function mouseover_handler(e) {
 
 /* map loading function: */
 function load_map(deforest_percent) {
+  /* get map objects: */
+  var map = site_vars['map'];
+  var map_base = site_vars['map_base'];
+  var map_title = site_vars['map_title'];
+  var map_color_map = site_vars['map_color_map'];
+  var map_data_groups = site_vars['map_data_groups'];
   /* get selected language and text: */
   var text_language = site_vars['language'];
   var language_text = site_vars['text'][text_language];
@@ -335,7 +341,7 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
-  layer_cartodb.on('add', function() { map_base = 'cartodb'; });
+  layer_cartodb.on('add', function() { site_vars['map_base'] = 'cartodb'; });
   /* define openstreetmap layer: */
   var layer_osm = L.tileLayer(
     'https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -347,7 +353,7 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
-  layer_osm.on('add', function() { map_base = 'osm'; });
+  layer_osm.on('add', function() { site_vars['map_base'] = 'osm'; });
   /* define sentinel-2 layer: */
   var host_s2 = 'https://tiles.maps.eox.at';
   var tiles_s2 = 's2cloudless-2023_3857';
@@ -360,7 +366,7 @@ function load_map(deforest_percent) {
       noWrap: true
     }
   );
-  layer_s2.on('add', function() { map_base = 's2'; });
+  layer_s2.on('add', function() { site_vars['map_base'] = 's2'; });
   /* get / set current base map: */
   if (map_base == 's2') {
     map_base = layer_s2;
@@ -585,16 +591,32 @@ function load_map(deforest_percent) {
   });
   map.on('zoomend', function() {
     document.removeEventListener('mouseover', mouseover_handler, true);
-    map_state = [map.getCenter(), map.getZoom()];
+    site_vars['map_state'] = [
+      site_vars['map'].getCenter(),
+      site_vars['map'].getZoom()
+    ];
   });
   map.on('moveend', function() {
     document.removeEventListener('mouseover', mouseover_handler, true);
-    map_state = [map.getCenter(), map.getZoom()];
+    site_vars['map_state'] = [
+      site_vars['map'].getCenter(),
+      site_vars['map'].getZoom()
+    ];
   });
   /* set map view, if possible: */
-  if ((map_state != null) && (map_state != undefined)) {
-    map.setView(map_state[0], map_state[1]);
+  if ((site_vars['map_state'] != null) &&
+      (site_vars['map_state'] != undefined)) {
+    map.setView(
+      site_vars['map_state'][0],
+      site_vars['map_state'][1]
+    );
   };
+  /* store map objects: */
+  site_vars['map'] = map;
+  site_vars['map_base'] = map_base;
+  site_vars['map_title'] = map_title;
+  site_vars['map_color_map'] = map_color_map;
+  site_vars['map_data_groups'] = map_data_groups;
   /* store current deforestation percentage value: */
   site_vars['deforest_current'] = deforest_percent;
   /* store current language of map text: */
