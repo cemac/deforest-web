@@ -10,12 +10,12 @@ var site_vars = {
   'el_content_map': document.getElementById('content_map'),
   /* colour map: */
   'color_map': {
-    'min': -2.45,
-    'max': 2.45,
+    'min': 0.0,
+    'max': 2.2,
     'decimals': 2,
     'colors': [
-      '#3b4cc0', '#5a78e4', '#7b9ff9', '#9ebeff', '#c0d4f5', '#dddcdc',
-      '#f2cbb7', '#f7ad90', '#ee8468', '#d65244', '#b40426'
+      '#dddcdc', '#e9d5cb', '#f2cbb7', '#f6bda2', '#f7ad90', '#f49a7b',
+      '#ee8468', '#e36c55', '#d65244', '#c73635', '#b40426'
     ]
   },
   /* data details and storage: */
@@ -222,7 +222,7 @@ function draw_color_map() {
   for (var i = (color_count - 1); i > -1; i--) {
     var my_html = '<p>';
     my_html += '<span class="map_color_map_color" style="background: ' +
-               data_colors[i] + ';"></span>';
+               data_colors[i] + '; opacity: 0.8;"></span>';
     my_html += '<span class="map_color_map_value">';
     if (i == (color_count - 1)) {
       my_html += '&gt;= ' + (data_min + (i * color_inc)).toFixed(data_decimals);
