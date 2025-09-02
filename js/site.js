@@ -499,14 +499,14 @@ function load_map(deforest_percent) {
           poly.dtnc = poly_dtnc;
           poly.fc = poly_fc;
           /* add tooltip: */
-          poly.tooltip = '<b>Region:</b> ' + poly_name + '<br>' +
-                         '<b>' + language_text['poly_points'] + ':</b> ' +
+          poly.tooltip = '<b>• Region:</b> ' + poly_name + '<br>' +
+                         '<b>• ' + language_text['poly_points'] + ':</b> ' +
                          poly_npix + '<br>' +
-                         '<b>' + language_text['poly_dt'] + ':</b> XDTX<br>' +
-                         '<b>' + language_text['poly_dtnc'] + ':</b> ' +
+                         '<b>• ' + language_text['poly_dt'] + ':</b> XDTX<br>' +
+                         '<b>• ' + language_text['poly_dtnc'] + ':</b> ' +
                          poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) +
                          ')<br>' +
-                         '<b>' + language_text['poly_fc'] + ':</b> ' + poly_fc.toFixed(3);
+                         '<b>• ' + language_text['poly_fc'] + ':</b> ' + poly_fc.toFixed(3);
           var poly_tooltip = L.tooltip({
             'content': poly.tooltip.replace('XDTX', poly_dt.toFixed(3)),
             'sticky': true,
