@@ -174,6 +174,73 @@ h4 a {
   background-color: rgba(204, 255, 51, 0.5) !important;
 }
 
+.leaflet-control-scale-line {
+  color: #ffffff;
+  border: 2px solid #ccff33;
+  border-top: none;
+  background: rgba(204, 255, 51, 0.5);
+}
+
+/* add margin to labels, to make space for radio: */
+.leaflet-control-layers-base label {
+  margin-left: 1.8em;
+  margin-top: 0.2em;
+  cursor: pointer;
+}
+
+/* hide the browser's default radio button: */
+.leaflet-control-layers-base input {
+  display: none;
+  opacity: 0;
+}
+
+/* custom radio button: */
+.leaflet-control-layers-base input:after {
+  position: absolute;
+  left: 0;
+  height: 1.3em;
+  width: 1.3em;
+  background-color: #ff0000;
+  border-radius: 50%;
+}
+
+/* custom radio button: */
+.radio_check {
+  position: absolute;
+  left: 0;
+  height: 1.3em;
+  width: 1.3em;
+  background-color: #cccccc;
+  border-radius: 50%;
+}
+
+/* when checked: */
+.leaflet-control-layers-base input:checked ~ .radio_check {
+  background-color: #ccff33;
+}
+
+/* create the indicator, hidden when not checked: */
+.radio_check:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* show the indicator when checked: */
+.leaflet-control-layers-base input:checked ~ .radio_check:after {
+  display: block;
+}
+
+/* style the indicator: */
+.leaflet-control-layers-base .radio_check:after {
+  top: 0.4em;
+  left: 0.4em;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background-color: #737474;
+}
+
 .leaflet-control-mouseposition {
   min-width: 11em;
   background-color: rgba(255, 255, 255, 0.7);

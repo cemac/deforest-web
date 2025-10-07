@@ -542,6 +542,19 @@ function load_map(deforest_percent) {
           'url(./img/controls/type_layers.png)';
       };
     };
+    /* add span elements for custom radio buttons. get selector elements: */
+    var layer_selectors = document.getElementsByClassName('leaflet-control-layers-selector')
+    /* loop through elements: */
+    for (var i = 0 ; i < layer_selectors.length ; i++) {
+      /* this element: */
+      var layer_selector = layer_selectors[i];
+      /* add span for custom radio button: */
+      if (layer_selector.className == 'leaflet-control-layers-selector') {
+        var radio_check = document.createElement('span');
+        radio_check.classList.add('radio_check');
+        layer_selector.parentNode.appendChild(radio_check);
+      };
+    };
     /* add mouse pointer position: */
     L.control.mousePosition().addTo(map);
     /* add scale bar: */
