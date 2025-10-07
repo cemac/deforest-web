@@ -74,7 +74,7 @@ h4 a {
 /** header: **/
 
 .header {
-  background-color: #84ceb4;
+  background-color: #6f6f6f;
   height: 6em;
   box-shadow: 0 0.4em 0.8em 0 rgba(0, 0, 0, 0.2),
               0 0.6em 2em 0 rgba(0, 0, 0, 0.19);
@@ -82,7 +82,7 @@ h4 a {
 }
 
 .header a {
-  color: #452711;
+  color: #ccff33;
   text-decoration: none;
 }
 
@@ -96,9 +96,9 @@ h4 a {
 }
 
 .header_text {
-  color: #ff0000;
+  color: #ccff33;
   font-family: Roboto, sans-serif;
-  font-size: 1.6em;
+  font-size: 1.8em;
   margin-left: 1em;
   margin-top: auto;
   margin-bottom: 0.5em;
@@ -107,7 +107,8 @@ h4 a {
 /** content: **/
 
 .content {
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #4a4a4a;
   margin-top: 0.3em;
   margin-bottom: 0.3em;
   box-shadow: 0 0.4em 0.8em 0 rgba(0, 0, 0, 0.2),
@@ -121,6 +122,11 @@ h4 a {
   }
 }
 
+.content a,
+.content a:visited {
+  color: #ffffff;
+}
+
 /** text: **/
 
 .content_text_container {
@@ -132,7 +138,7 @@ h4 a {
 
 .content_text_container a,
 .content_text_container a:visited {
-  color: #181868;
+  color: #ffffff;
 }
 
 /** language selection: **/
@@ -155,6 +161,19 @@ h4 a {
 
 /** map: **/
 
+.leaflet-bar,
+.leaflet-bar a,
+.leaflet-bar a.leaflet-disabled,
+.leaflet-control {
+  color: #ffffff !important;
+  background-color: rgba(104, 104, 104, 0.9) !important;
+  border: 2px solid rgba(204, 255, 51, 0.2) !important;;
+}
+
+.leaflet-bar a:hover {
+  background-color: rgba(204, 255, 51, 0.5) !important;
+}
+
 .leaflet-control-mouseposition {
   min-width: 11em;
   background-color: rgba(255, 255, 255, 0.7);
@@ -172,9 +191,6 @@ h4 a {
 
 .map_control {
   padding: 0.1em 0.5em 0.1em 0.5em;
-  background: white;
-  background: rgba(255,255,255,0.9);
-  box-shadow: 0 0 0.75em rgba(0,0,0,0.2);
   border-radius: 0.25em;
   text-align: right;
 }
@@ -248,7 +264,7 @@ h4 a {
 /** footer: **/
 
 .footer {
-  background-color: #484848;
+  background-color: #6f6f6f;
   height: 3.5em;
   margin-top: auto;
   box-shadow: 0 0.4em 0.8em 0 rgba(0, 0, 0, 0.2),
