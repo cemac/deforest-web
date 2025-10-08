@@ -91,10 +91,28 @@
           <!-- language selection: ________________________________________ -->
           <div id="content_language"
                class="content_language row flex_end">
-            <span id="language_link_en"
-                  class="language_link" onclick="load_text('en')">English</span> |
-            <span id="language_link_pt"
-                  class="language_link" onclick="load_text('pt')">Português</span>
+            <label class="language_radio">
+              <span id="language_link_en"
+                    class="language_link" onclick="load_text('en')">English</span>
+              <input id="language_input_en"
+                     class="language_input"
+                     type="radio"
+                     name="language_select"
+                     value="en"
+                     onclick="load_text('en')">
+              <span class="language_check"></span>
+            </label>
+            <label class="language_radio">
+              <span id="language_link_pt"
+                    class="language_link" onclick="load_text('pt')">Português</span>
+              <input id="language_input_pt"
+                     class="language_input"
+                     type="radio"
+                     name="language_select"
+                     value="pt"
+                     onclick="load_text('pt')">
+              <span class="language_check"></span>
+            <label>
           </div>
           <!-- map: _______________________________________________________ -->
           <div id="content_map"

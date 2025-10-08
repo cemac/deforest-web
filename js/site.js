@@ -702,6 +702,14 @@ async function load_text(text_language) {
   };
   var language_link_active = document.getElementById('language_link_' + text_language);
   language_link_active.style.textDecoration = 'underline';
+  /* check active language radio input: */
+  var language_radios = document.getElementsByClassName('language_input');
+  for (var i = 0 ; i < language_radios.length ; i++) {
+    var language_radio = language_radios[i];
+    language_radio.checked = false;
+  };
+  var language_radio_active = document.getElementById('language_input_' + text_language);
+  language_radio_active.checked = true;
   /* then load the data: */
   load_data();
 };

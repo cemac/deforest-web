@@ -156,7 +156,63 @@ h4 a {
 }
 
 .language_link:hover {
-  color: #484848;
+  color: #cccccc;
+}
+
+.language_radio {
+  display: block;
+  position: relative;
+  padding-left: 1.8em;
+  font-size: 1em;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* hide the browser's default radio button: */
+.language_radio input {
+  display: none;
+  opacity: 0;
+}
+
+/* custom radio button: */
+.language_check {
+  position: absolute;
+  top: 0.1em;
+  left: 0.3em;
+  height: 1.1em;
+  width: 1.1em;
+  background-color: #cccccc;
+  border-radius: 50%;
+}
+
+/* when checked: */
+.language_radio input:checked ~ .language_check {
+  background-color: #ccff33;
+}
+
+/* create the indicator, hidden when not checked: */
+.language_check:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* show the indicator when checked: */
+.language_radio input:checked ~ .language_check:after {
+  display: block;
+}
+
+/* style the indicator: */
+.language_radio .language_check:after {
+  top: 0.31em;
+  left: 0.31em;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background-color: #737474;
 }
 
 /** map: **/
@@ -179,6 +235,7 @@ h4 a {
   border: 2px solid #ccff33;
   border-top: none;
   background: rgba(204, 255, 51, 0.5);
+  text-shadow: none;
 }
 
 /* add margin to labels, to make space for radio: */
@@ -192,16 +249,6 @@ h4 a {
 .leaflet-control-layers-base input {
   display: none;
   opacity: 0;
-}
-
-/* custom radio button: */
-.leaflet-control-layers-base input:after {
-  position: absolute;
-  left: 0;
-  height: 1.3em;
-  width: 1.3em;
-  background-color: #ff0000;
-  border-radius: 50%;
 }
 
 /* custom radio button: */
