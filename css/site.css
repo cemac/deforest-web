@@ -37,7 +37,7 @@
 }
 
 .flex_justify {
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .flex_grow {
@@ -54,7 +54,7 @@ body {
   background-color: #938b9a;
   margin: 0;
   padding: 0;
-  font-family: sans-serif, "Arial", "Helvetica";
+  font-family: "open Sans", "Arial", "Helvetica", sans-serif;
 }
 
 /** headers: **/
@@ -89,20 +89,15 @@ h4 a {
 
 @media only screen and (max-width: 550px) {
   .header_image {
-    max-height: 4em;
+    max-height: 3em;
     margin: 1em;
+    margin-top: 1.5em;
     margin-bottom: 0.5em;
-    position: absolute;
-    right: 50%;
-    transform: translate(50%, 0%);
-  }
-  .header_text {
-    display: none;
   }
 }
 
 .header a {
-  color: #80C41C;
+  color: #80c41c;
   text-decoration: none;
 }
 
@@ -116,12 +111,48 @@ h4 a {
 }
 
 .header_text {
-  color: #80C41C;
+  color: #80c41c;
   font-family: Roboto, sans-serif;
   font-size: 1.7em;
   margin-left: 0.2em;
   margin-top: auto;
   margin-bottom: 0.4em;
+  flex-basis: 90%;
+}
+
+@media only screen and (max-width: 800px) {
+  .header_text {
+    display: none;
+  }
+}
+
+/** navigation links: **/
+
+.header_navigation {
+  color: #80c41c;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 2.5em;
+  margin-right: 1.5em;
+  text-align: right;
+  text-wrap: nowrap;
+}
+
+@media only screen and (max-width: 550px) {
+  .header_navigation {
+    margin-right: 0.5em;
+  }
+}
+
+.header_navigation a,
+.header_navigation a:visited {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.header_navigation a:hover {
+  color: #cccccc;
 }
 
 /** content: **/
@@ -167,7 +198,7 @@ h4 a {
   font-size: 1.0em;
   height: 1.0em;
   max-height: 1.0em;
-  margin: 0.2em 0.5em 0.2em 0.5em;
+  margin: 0.4em 0.5em 0.1em 0.5em;
 }
 
 .language_link {
@@ -210,7 +241,7 @@ h4 a {
 
 /* when checked: */
 .language_radio input:checked ~ .language_check {
-  background-color: #80C41C;
+  background-color: #80c41c;
 }
 
 /* create the indicator, hidden when not checked: */
@@ -252,7 +283,7 @@ h4 a {
 
 .leaflet-control-scale-line {
   color: #ffffff;
-  border: 2px solid #80C41C;
+  border: 2px solid #80c41c;
   border-top: none;
   background: rgba(128, 196, 28, 0.5);
   text-shadow: none;
@@ -283,7 +314,7 @@ h4 a {
 
 /* when checked: */
 .leaflet-control-layers-base input:checked ~ .radio_check {
-  background-color: #80C41C;
+  background-color: #80c41c;
 }
 
 /* create the indicator, hidden when not checked: */
@@ -420,8 +451,8 @@ h4 a {
 .noUi-handle {
   height: 18px !important;
   top: -4px !important;
-  background: #80C41C;
-  border: 1px solid #80C41C;
+  background: #80c41c;
+  border: 1px solid #80c41c;
   box-shadow: none;
 }
 
