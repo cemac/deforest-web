@@ -81,8 +81,28 @@ h4 a {
   margin-bottom: auto;
 }
 
+.header_image {
+  max-height: 4em;
+  margin: 1em;
+  margin-bottom: 0.5em;
+}
+
+@media only screen and (max-width: 550px) {
+  .header_image {
+    max-height: 4em;
+    margin: 1em;
+    margin-bottom: 0.5em;
+    position: absolute;
+    right: 50%;
+    transform: translate(50%, 0%);
+  }
+  .header_text {
+    display: none;
+  }
+}
+
 .header a {
-  color: #ccff33;
+  color: #80C41C;
   text-decoration: none;
 }
 
@@ -96,12 +116,12 @@ h4 a {
 }
 
 .header_text {
-  color: #ccff33;
+  color: #80C41C;
   font-family: Roboto, sans-serif;
   font-size: 1.7em;
-  margin-left: 0.8em;
+  margin-left: 0.2em;
   margin-top: auto;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.4em;
 }
 
 /** content: **/
@@ -190,7 +210,7 @@ h4 a {
 
 /* when checked: */
 .language_radio input:checked ~ .language_check {
-  background-color: #ccff33;
+  background-color: #80C41C;
 }
 
 /* create the indicator, hidden when not checked: */
@@ -212,7 +232,7 @@ h4 a {
   width: 0.5em;
   height: 0.5em;
   border-radius: 50%;
-  background-color: #737474;
+  background-color: #4a4a4a;
 }
 
 /** map: **/
@@ -223,18 +243,18 @@ h4 a {
 .leaflet-control {
   color: #ffffff !important;
   background-color: rgba(104, 104, 104, 0.9) !important;
-  border: 2px solid rgba(204, 255, 51, 0.2) !important;;
+  border: 2px solid rgba(128, 196, 28, 0.2) !important;;
 }
 
 .leaflet-bar a:hover {
-  background-color: rgba(204, 255, 51, 0.5) !important;
+  background-color: rgba(128, 196, 28, 0.5) !important;
 }
 
 .leaflet-control-scale-line {
   color: #ffffff;
-  border: 2px solid #ccff33;
+  border: 2px solid #80C41C;
   border-top: none;
-  background: rgba(204, 255, 51, 0.5);
+  background: rgba(128, 196, 28, 0.5);
   text-shadow: none;
 }
 
@@ -263,7 +283,7 @@ h4 a {
 
 /* when checked: */
 .leaflet-control-layers-base input:checked ~ .radio_check {
-  background-color: #ccff33;
+  background-color: #80C41C;
 }
 
 /* create the indicator, hidden when not checked: */
@@ -285,7 +305,7 @@ h4 a {
   width: 0.5em;
   height: 0.5em;
   border-radius: 50%;
-  background-color: #737474;
+  background-color: #4a4a4a;
 }
 
 .leaflet-control-mouseposition {
@@ -371,13 +391,14 @@ h4 a {
 .content_slider_title {
   margin: 0.2em;
   margin-left: 0.5em;
+  font-size: 0.9em;
 }
 
 .content_slider_value {
   display: inline-block;
   min-width: 4em;
   margin: 0.2em;
-  font-weight: 0.9em;
+  font-size: 0.9em;
   color: #ffffff;
 }
 
@@ -399,8 +420,8 @@ h4 a {
 .noUi-handle {
   height: 18px !important;
   top: -4px !important;
-  background: #ccff33;
-  border: 1px solid #ccff33;
+  background: #80C41C;
+  border: 1px solid #80C41C;
   box-shadow: none;
 }
 
