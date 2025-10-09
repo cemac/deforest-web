@@ -186,6 +186,7 @@ h4 a {
   margin-right: 2em;
   margin-bottom: 1em;
   max-width: 49em;
+  padding-right: 0.8em;
 }
 
 .content_text_container a,
@@ -411,15 +412,17 @@ h4 a {
 /** map overlay text: **/
 
 .content_map_text {
+  display: none;
   color: #ffffff;
   background-color: rgba(104, 104, 104, 0.95);
   border: none;
   height: 100%;
   width: 45%;
-  min-width: 18em;
+  min-width: 20em;
   z-index: 999999;
   position: absolute;
   overflow-x: hidden;
+  overflow-y: scroll;
   transition: 0.5s;
   padding-top: 2em;
   padding-left: 0.5em;
@@ -428,13 +431,19 @@ h4 a {
   cursor: auto;
 }
 
+.content_map_text_close_container {
+  position: sticky;
+  width: 100%;
+  top: 0;
+}
+
 .content_map_text_close {
   color: #ffffff;
-  font-size: 2.5em;
+  font-size: 2em;
   text-decoration: none;
   position: absolute;
-  top: 0;
-  right: 0.5em;
+  top: -1em;
+  right: 0.4em;
 }
 
 .content_map_text_close:hover {
@@ -447,13 +456,13 @@ h4 a {
   cursor: pointer;
 }
 
+.map_text_open_container:hover {
+  background-color: rgba(121, 156, 72, 0.9) !important;
+}
+
 .map_text_open_img {
   margin: 0;
   width: 1.8em;
-}
-
-.map_text_open_container:hover {
-  background-color: rgba(121, 156, 72, 0.9) !important;
 }
 
 /** slider: **/

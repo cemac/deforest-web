@@ -601,7 +601,7 @@ function load_map(deforest_percent) {
   /* add colour map if not yet added: */
   if (map_color_map == null) {
     var color_map_src = draw_color_map();
-    map_color_map = L.control({position: 'bottomright'});
+    map_color_map = L.control({position: 'bottomright', interactive: true});
     map_color_map.onAdd = function(map) {
       this._div = L.DomUtil.create('div', 'map_control map_color_map');
         this.update(color_map_src);
@@ -648,6 +648,16 @@ function load_map(deforest_percent) {
   site_vars['deforest_current'] = deforest_percent;
   /* store current language of map text: */
   site_vars['map_language'] = text_language;
+  /* make map text visible: */
+  var map_text_el = document.getElementById('content_map_text');
+  map_text_el.style.display = 'inline';
+  /* stop progpagation of mouse events on onverlay text element: **/
+  L.DomEvent.on(map_text_el, 'click', L.DomEvent.stopPropagation);
+  L.DomEvent.on(map_text_el, 'dblclick', L.DomEvent.stopPropagation);
+  L.DomEvent.on(map_text_el, 'mousedown', L.DomEvent.stopPropagation);
+  L.DomEvent.on(map_text_el, 'mouseover', L.DomEvent.stopPropagation);
+  L.DomEvent.on(map_text_el, 'scroll', L.DomEvent.stopPropagation);
+  L.DomEvent.on(map_text_el, 'wheel', L.DomEvent.stopPropagation);
 };
 
 /* text loading function: */
@@ -707,7 +717,7 @@ async function load_text(text_language) {
     var el_content_slider_title = document.getElementById('content_slider_title');
     el_content_slider_title.innerHTML = language_text['slider_title'];
     /* text: */
-    var el_content_text = document.getElementById('content_text');
+    var el_content_text = document.getElementById('content_map_text_text');
     el_content_text.innerHTML = language_text['text'];
   };
   /* underline active language link: */
