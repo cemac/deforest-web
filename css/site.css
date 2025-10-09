@@ -103,7 +103,7 @@ h4 a {
 
 @media only screen and (min-width: 1800px) {
   .header {
-    margin-top: 1em;
+    margin-top: 0.5em;
     margin-left: 0.3em;
     margin-right: 0.3em;
     border-radius: 1.5em 1.5em 0em 0em;
@@ -187,6 +187,7 @@ h4 a {
   margin-bottom: 1em;
   max-width: 49em;
   padding-right: 0.8em;
+  padding-bottom: 3em;
 }
 
 .content_text_container a,
