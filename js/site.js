@@ -403,6 +403,22 @@ function load_map(deforest_percent) {
     map_atrr_control.setPrefix(false);
     /* add base tile layer to map: */
     map.addLayer(map_base);
+    /* add text overlay button: */
+    var map_text_open = L.control({position: 'topleft'});
+    map_text_open.onAdd = function(map) {
+       this._div = L.DomUtil.create('div', 'map_text_open_container');
+       this.update();
+       return this._div;
+    };
+    map_text_open.update = function(props) {
+      this._div.innerHTML = '<img class="map_text_open_img" ' +
+                            'src="img/controls/text_overlay.png" title="Display text">';
+    };
+    map_text_open.addTo(map);
+    /* add listener for map text open button ... get the element: */
+    var map_text_open_el = document.getElementsByClassName('map_text_open_container')[0];
+    /* add the listener: */
+    map_text_open_el.addEventListener('click', map_text_toggle);
     /* add zoom control: */
     var zoom_control = L.control.zoom();
     zoom_control.addTo(map);
@@ -714,6 +730,25 @@ async function load_text(text_language) {
   load_data();
 };
 
+/* function to toggle map overlay text: */
+function map_text_toggle() {
+  /* map text element: */
+  var map_text_el = document.getElementById('content_map_text');
+  /* get width: */
+  var map_text_width = map_text_el.style.width;
+  /* if controls are not visible: */
+  if (map_text_width == '0px') {
+    /* show the controls: */
+    map_text_el.style.width = '45%';
+    map_text_el.style.minWidth = '18em';
+    map_text_el.style.paddingLeft = '0.5em';
+  } else {
+    /* hide the controls: */
+    map_text_el.style.width = '0px';
+    map_text_el.style.minWidth = '0px';
+    map_text_el.style.paddingLeft = '0px';
+  };
+}
 
 /** add listeners: **/
 

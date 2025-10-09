@@ -408,6 +408,54 @@ h4 a {
   text-align: left;
 }
 
+/** map overlay text: **/
+
+.content_map_text {
+  color: #ffffff;
+  background-color: rgba(104, 104, 104, 0.95);
+  border: none;
+  height: 100%;
+  width: 45%;
+  min-width: 18em;
+  z-index: 999999;
+  position: absolute;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 2em;
+  padding-left: 0.5em;
+  font-family: "open Sans", "Arial", "Helvetica", sans-serif;
+  font-size: 1.3em;
+  cursor: auto;
+}
+
+.content_map_text_close {
+  color: #ffffff;
+  font-size: 2.5em;
+  text-decoration: none;
+  position: absolute;
+  top: 0;
+  right: 0.5em;
+}
+
+.content_map_text_close:hover {
+  color: #cccccc;
+}
+
+.map_text_open_container {
+  padding: 0.55em 0.5em 0.2em 0.5em;
+  text-align: right;
+  cursor: pointer;
+}
+
+.map_text_open_img {
+  margin: 0;
+  width: 1.8em;
+}
+
+.map_text_open_container:hover {
+  background-color: rgba(121, 156, 72, 0.9) !important;
+}
+
 /** slider: **/
 
 .content_slider_container {
