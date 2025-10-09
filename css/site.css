@@ -354,6 +354,7 @@ h4 a {
   margin: 0.5em;
   margin-bottom: 0em;
   min-height: 75vh;
+  border: 2px solid rgba(128, 196, 28, 0.2) !important;;
 }
 
 .map_control {
@@ -414,7 +415,8 @@ h4 a {
 }
 
 .content_slider {
-  margin: 0.5em;
+  margin: 0.4em;
+  margin-top: 0.25em;
   padding: 0.3em;
   padding-top: 0.2em;
   padding-bottom: 0em;
