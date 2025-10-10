@@ -188,18 +188,22 @@ h4 a {
 /** text: **/
 
 .content_text_container {
+  margin-top: 1.5em;
+  max-height: 73vh;
+  overflow-y: scroll;
+}
+
+.content_text {
   margin-left: 2em;
   margin-right: 2em;
   margin-bottom: 1em;
   max-width: 49em;
   padding-right: 0.8em;
   padding-bottom: 3em;
-  max-height: 70vh;
-  overflow-y: scroll;
 }
 
-.content_text_container a,
-.content_text_container a:visited {
+.content_text a,
+.content_text a:visited {
   color: #ffffff;
 }
 
