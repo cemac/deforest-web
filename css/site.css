@@ -361,7 +361,8 @@ h4 a {
 .content_map {
   margin: 0.5em;
   margin-bottom: 0em;
-  min-height: 69vh;
+  height: 69vh;
+  min-height: 410px;
   border: 2px solid rgba(128, 196, 28, 0.2) !important;;
 }
 
