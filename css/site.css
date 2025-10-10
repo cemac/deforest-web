@@ -194,6 +194,8 @@ h4 a {
   max-width: 49em;
   padding-right: 0.8em;
   padding-bottom: 3em;
+  max-height: 70vh;
+  overflow-y: scroll;
 }
 
 .content_text_container a,

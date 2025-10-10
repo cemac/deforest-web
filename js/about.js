@@ -69,6 +69,9 @@ async function load_text(text_language) {
     document.title = language_text['title'];
     var el_title_a = document.getElementById('title_a');
     el_title_a.innerHTML = language_text['title'];
+    /* text: */
+    var el_content_text = document.getElementById('content_text');
+    el_content_text.innerHTML = language_text['about_text'];
     /* links: */
     var el_link_home = document.getElementById('link_home');
     el_link_home.innerHTML = language_text['link_home'];
