@@ -493,7 +493,7 @@ function load_map(deforest_percent) {
           poly.dtnc = poly_dtnc;
           poly.fc = poly_fc;
           /* add tooltip: */
-          poly.tooltip = '<b>• Region:</b> ' + poly_name + '<br>' +
+          poly.tooltip = '<b>• ' + language_text['poly_region']  + ':</b> ' + poly_name + '<br>' +
                          '<b>• ' + language_text['poly_points'] + ':</b> ' +
                          poly_npix + '<br>' +
                          '<b>• ' + language_text['poly_dt'] + ':</b> XDTX<br>' +
