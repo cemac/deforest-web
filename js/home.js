@@ -655,13 +655,30 @@ async function load_text(text_language) {
       /* check for portugese: */
       if (browser_language.search(/^pt/) == 0) {
         text_language = 'pt';
+      /* check for spanish: */
+      } else if (browser_language.search(/^es/) == 0) {
+        text_language = 'es';
+      /* check for french: */
+      } else if (browser_language.search(/^fr/) == 0) {
+        text_language = 'fr';
+      /* check for indonesian: */
+      } else if (browser_language.search(/^id/) == 0) {
+        text_language = 'id';
+      /* check for swahili: */
+      } else if (browser_language.search(/^sw/) == 0) {
+        text_language = 'sw';
+      /* check for chinese: */
+      } else if (browser_language.search(/^zh/) == 0) {
+        text_language = 'zh';
       /* else, use english: */
       } else {
         text_language = 'en';
       };
     };
-  /* use english, unless portugese specified ... :*/
-  } else if (text_language != 'pt') {
+  /* use english, if unknown language specified ... :*/
+  } else if ((text_language != 'pt') && (text_language != 'es') &&
+             (text_language != 'fr') && (text_language != 'id') &&
+             (text_language != 'sw') && (text_language != 'zh')) {
       text_language = 'en';
   };
   /* set site language: */
