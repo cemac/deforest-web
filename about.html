@@ -93,40 +93,35 @@
           <div id="content_language"
                class="content_language row flex_end">
             <!-- language select: _________________________________________ -->
-           <img id="language_img"
-                class="language_image"
-                title="Select language"
-                src='img/icon/language.png'>
-            <select name="language_select">
+            <img id="language_img"
+                 class="language_image"
+                 title="Select language"
+                 src='img/icon/language.png'>
+            <select id="language_select"
+                    name="language_select"
+                    onchange="load_text(document.getElementById('language_select').value);">
               <option id="language_link_en"
                       class="language_link"
                       value="en"
-                      selected
-                      onclick="load_text('en')">English (en)</option>
+                      selected>English (en)</option>
               <option id="language_link_pt"
                       class="language_link"
-                      value="pt"
-                      onclick="load_text('pt')">Português (pt)</option>
+                      value="pt">Português (pt)</option>
               <option id="language_link_es"
                       class="language_link"
-                      value="es"
-                      onclick="load_text('es')">Español (es)</option>
+                      value="es">Español (es)</option>
               <option id="language_link_fr"
                       class="language_link"
-                      value="fr"
-                      onclick="load_text('fr')">Français (fr)</option>
+                      value="fr">Français (fr)</option>
               <option id="language_link_id"
                       class="language_link"
-                      value="id"
-                      onclick="load_text('id')">Bahasa Indonesia (id)</option>
+                      value="id">Bahasa Indonesia (id)</option>
               <option id="language_link_sw"
                       class="language_link"
-                      value="sw"
-                      onclick="load_text('sw')">Kiswahili (sw)</option>
+                      value="sw">Kiswahili (sw)</option>
               <option id="language_link_zh"
                       class="language_link"
-                      value="zh"
-                      onclick="load_text('zh')">中文 (zh)</option>
+                      value="zh">中文 (zh)</option>
             </select>
           </div>
           <!-- text: ______________________________________________________ -->
