@@ -720,22 +720,14 @@ async function load_text(text_language) {
     var el_link_about = document.getElementById('link_about');
     el_link_about.innerHTML = language_text['link_about'];
   };
-  /* underline active language link: */
+  /* select active language link: */
   var language_links = document.getElementsByClassName('language_link');
   for (var i = 0 ; i < language_links.length ; i++) {
     var language_link = language_links[i];
-    language_link.style.textDecoration = 'none';
+    language_link.selected = false;
   };
   var language_link_active = document.getElementById('language_link_' + text_language);
-  language_link_active.style.textDecoration = 'underline';
-  /* check active language radio input: */
-  var language_radios = document.getElementsByClassName('language_input');
-  for (var i = 0 ; i < language_radios.length ; i++) {
-    var language_radio = language_radios[i];
-    language_radio.checked = false;
-  };
-  var language_radio_active = document.getElementById('language_input_' + text_language);
-  language_radio_active.checked = true;
+  language_link_active.selected = true;
   /* then load the data: */
   load_data();
 };

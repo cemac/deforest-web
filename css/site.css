@@ -211,8 +211,8 @@ h4 a {
 
 .content_language {
   font-size: 1.0em;
-  height: 1.0em;
-  max-height: 1.0em;
+  height: 1.4em;
+  max-height: 1.4em;
   margin: 0.4em 0.5em 0.1em 0.5em;
 }
 
@@ -225,60 +225,8 @@ h4 a {
   color: #cccccc;
 }
 
-.language_radio {
-  display: block;
-  position: relative;
-  padding-left: 1.8em;
-  font-size: 1em;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* hide the browser's default radio button: */
-.language_radio input {
-  display: none;
-  opacity: 0;
-}
-
-/* custom radio button: */
-.language_check {
-  position: absolute;
-  top: 0.1em;
-  left: 0.3em;
-  height: 1.1em;
-  width: 1.1em;
-  background-color: #cccccc;
-  border-radius: 50%;
-}
-
-/* when checked: */
-.language_radio input:checked ~ .language_check {
-  background-color: #80c41c;
-}
-
-/* create the indicator, hidden when not checked: */
-.language_check:after {
-  content: '';
-  position: absolute;
-  display: none;
-}
-
-/* show the indicator when checked: */
-.language_radio input:checked ~ .language_check:after {
-  display: block;
-}
-
-/* style the indicator: */
-.language_radio .language_check:after {
-  top: 0.31em;
-  left: 0.31em;
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 50%;
-  background-color: #4a4a4a;
+.language_image {
+  margin: 0em 0.2em 0em 0.2em;
 }
 
 /** map: **/
