@@ -480,6 +480,10 @@ function load_map(deforest_percent) {
           var poly_name = type_data[k]['name'];
           var poly_sd = type_data[k]['sd'];
           var poly_fc = type_data[k]['forest_cover_2020'];
+          var poly_mort = type_data[k]['heatmort'];
+          if (poly_mort != 'null') {
+            poly_mort = poly_mort.toFixed(3);
+          };
           /* calculate temperature difference value: */
           var poly_dt = deforest_percent * poly_dtnc * poly_fc;
           var poly_color = value_to_color(poly_dt);
@@ -492,6 +496,7 @@ function load_map(deforest_percent) {
           /* add required properties to poly: */
           poly.dtnc = poly_dtnc;
           poly.fc = poly_fc;
+          poly.mort = poly_mort;
           /* add tooltip: */
           poly.tooltip = '<b>• ' + language_text['poly_region']  + ':</b> ' + poly_name + '<br>' +
                          '<b>• ' + language_text['poly_points'] + ':</b> ' +
@@ -500,7 +505,8 @@ function load_map(deforest_percent) {
                          '<b>• ' + language_text['poly_dtnc'] + ':</b> ' +
                          poly_dtnc.toFixed(3) + ' (+/- ' + poly_sd.toFixed(3) +
                          ')<br>' +
-                         '<b>• ' + language_text['poly_fc'] + ':</b> ' + poly_fc.toFixed(3);
+                         '<b>• ' + language_text['poly_fc'] + ':</b> ' + poly_fc.toFixed(3) + '<br>' +
+                         '<b>• ' + language_text['poly_mort'] + ':</b> ' + poly_mort;
           var poly_tooltip = L.tooltip({
             'content': poly.tooltip.replace('XDTX', poly_dt.toFixed(3)),
             'sticky': true,
