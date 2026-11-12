@@ -306,7 +306,7 @@ function load_map(deforest_percent) {
   };
   /* define cartodb layer: */
   var layer_cartodb = L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png?key=cb1_2roh_1_d63ca49df98f4bc25f7ebd3d', {
       'attribution': '&copy; ' +
                      '<a href="https://www.openstreetmap.org/copyright" ' +
                      'target="_blank">OpenStreetMap</a>, &copy; ' +
@@ -482,7 +482,7 @@ function load_map(deforest_percent) {
           var poly_fc = type_data[k]['forest_cover_2020'];
           var poly_mort = type_data[k]['heatmort'];
           if (poly_mort != 'null') {
-            poly_mort = poly_mort.toFixed(3);
+            poly_mort = Math.round(poly_mort);
           };
           /* calculate temperature difference value: */
           var poly_dt = deforest_percent * poly_dtnc * poly_fc;
